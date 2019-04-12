@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rocket Calculator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+			background-color: #FFFFFF;
+			background-image: url(https://i.pinimg.com/originals/32/da/70/32da70fa743ed140848005d13d0b83ff.jpg);
+			background-position: top;
+			background-repeat: repeat;
+			background-attachment: fixed;
+			font-family: "Verdana", sans-serif;
+			font-size: 1.2em;
+			text-align: center;
+        }
+        html, body {
+            min-height: 100%;
+            height: 100%;
+        }
+        .content {
+            margin: 0 10px;
+			background-color: #ffffff;
+			display: inline-block;
+			text-align: left;
+			max-width:1200px;
+        }
+        .info {
+            background-color: gainsboro;
+            padding: 15px;
+			position: fixed;
+			bottom: 0;
+			right: 0;
+        }
+        ul {
+            margin: 0;
+        }
+		.preview {
+			background-color: black;
+			color: #fff;
+			text-align: center;
+			padding: 5px 5px;
+			border-radius: 6px;
+ 			position: fixed;
+		}
+	}
+    </style>
+</head>
+<body>
+
+<div class="content">
+<p align=center><font size="32">Rocket Calculator</font></p>
+
+
+<table border="1">
+<tr><td>Rocket</td><td>Spaceport</td><td>Losses</td><td>Rocket data</td><td>Output</td></tr>
+
+<tr>
+
+<td>
+	<select>
+		<option>Rocket 1</option>
+		<option>Rocket 2</option>
+	</select>
+</td>
+
+<td>
+	<select>
+		<option>Canaveral</option>
+	</select>
+	<table border="1">
+	<tr><td>Starting Point Altitude</td><td> <label id="Starting_Point_Altitude"value=0>0</label>       </td><td>Km</td></tr>
+	<tr><td>Additional Speed</td><td> <label id="Additional_Speed"              value=0>0</label>       </td><td>m/s</td></tr>
+	<tr><td>Orbit Perigee</td><td> <label id="Orbit_Perigee"                    value=200>200</label>   </td><td>Km</td></tr>
+	<tr><td>Orbit Apogee</td><td> <label id="Orbit_Apogee"                      value=0>0</label>       </td><td>Km</td></tr>
+	<tr><td>Spaceport latitude</td><td> <label id="Spaceport_latitude"          value=28.5>28.5</label> </td><td>grad</td></tr>
+	<tr><td>Orbit Inclination</td><td> <label id="Orbit_Inclination"            value=28.5>28.5</label> </td><td>grad</td></tr>
+	
+	<tr><td>Intermediate angle</td><td> <label id="Intermediate_angle"    ></label></td><td>grad</td></tr>
+	<tr><td>Launch azimuth</td><td> <label id="Launch_azimuth"            ></label></td><td>grad</td></tr>
+	<tr><td>Launch point speed</td><td> <label id="Launch_point_speed"    ></label></td><td>m/s</td></tr>
+	<tr><td>Starting Point Altitude orbital velosity</td><td> <label id="Starting_Point_Altitude_orbital_velosity"    ></label></td><td>m/s</td></tr>
+	<tr><td>Absolute orbital velocity</td><td> <label id="Absolute_orbital_velocity"    ></label></td><td>m/s</td></tr>
+	<tr><td>Orbital velocity</td><td> <label id="Orbital_velocity"    ></label></td><td>m/s</td></tr>
+	<tr><td>Orbital velocity increment due to the Earth rotation</td><td> <label id="Orbital_velocity_increment_due_to_the_Earth_rotation"    ></label></td><td>m/s</td></tr>
+	<tr><td>Specific velocity for circular orbit</td><td> <label id="Specific_velocity_for_circular_orbit"    ></label></td><td>m/s</td></tr>
+	<tr><td>Specific velocity for target orbit</td><td> <label id="Specific_velocity_for_target_orbit"    ></label></td><td>m/s</td></tr>
+	<tr><td>Specific velocity for LEO</td><td> <label id="Specific_velocity_for_LEO"    ></label></td><td>m/s</td></tr>
+	
+	</table>	
+</td>
+
+</tr>
+
+</table>
+</div>
+
+<script>
+	var elStarting_Point_Altitude = document.querySelector('#Starting_Point_Altitude');
+	var elAdditional_Speed = document.querySelector('#Additional_Speed');
+	var elOrbit_Perigee = document.querySelector('#Orbit_Perigee');
+	var elOrbit_Apogee = document.querySelector('#Orbit_Apogee');
+	var elSpaceport_latitude = document.querySelector('#Spaceport_latitude');
+	var elOrbit_Inclination = document.querySelector('#Orbit_Inclination');
+	var elIntermediate_angle = document.querySelector('#Intermediate_angle');
+	var elLaunch_azimuth = document.querySelector('#Launch_azimuth');
+	var elLaunch_point_speed = document.querySelector('#Launch_point_speed');
+	var elStarting_Point_Altitude_orbital_velosity = document.querySelector('#Starting_Point_Altitude_orbital_velosity');
+	var elAbsolute_orbital_velocity = document.querySelector('#Absolute_orbital_velocity');
+	var elOrbital_velocity = document.querySelector('#Orbital_velocity');
+	var elOrbital_velocity_increment_due_to_the_Earth_rotation = document.querySelector('#Orbital_velocity_increment_due_to_the_Earth_rotation');
+	var elSpecific_velocity_for_circular_orbit = document.querySelector('#Specific_velocity_for_circular_orbit');
+	var elSpecific_velocity_for_target_orbit = document.querySelector('#Specific_velocity_for_target_orbit');
+	var elSpecific_velocity_for_LEO = document.querySelector('#Specific_velocity_for_LEO');
+	
+	window.onload = onPageLoad;
+	
+	function Rad2Deg(radians)
+	{
+		return radians * (180.0/Math.PI);
+	}
+	
+	function Deg2Rad(degrees)
+	{
+		return degrees * (Math.PI/180.0);
+	}
+	
+	function Calculate()
+	{
+		var Starting_Point_Altitude = parseFloat(elStarting_Point_Altitude.getAttribute("value"));
+		var Additional_Speed = parseFloat(elAdditional_Speed.getAttribute("value"));
+		var Orbit_Perigee = parseFloat(elOrbit_Perigee.getAttribute("value"));
+		var Orbit_Apogee = parseFloat(elOrbit_Apogee.getAttribute("value"));
+		var Spaceport_latitude = parseFloat(elSpaceport_latitude.getAttribute("value"));
+		var Orbit_Inclination = parseFloat(elOrbit_Inclination.getAttribute("value"));
+		
+		var Intermediate_angle = Orbit_Inclination > Spaceport_latitude ?
+				(Rad2Deg(Math.asin(Math.cos(Deg2Rad(Orbit_Inclination))/Math.cos(Deg2Rad(Spaceport_latitude))))) :
+				(90.0-Rad2Deg(Math.asin(1.0-(Math.cos(Deg2Rad(Orbit_Inclination))/Math.cos(Deg2Rad(Spaceport_latitude))))));
+		elIntermediate_angle.textContent = Intermediate_angle;
+		
+		var Launch_point_speed = 460.0*Math.cos(Deg2Rad(Spaceport_latitude));
+		elLaunch_point_speed.textContent = Launch_point_speed;
+		
+		var Starting_Point_Altitude_orbital_velosity = Math.sqrt(398730000000/(6378+Starting_Point_Altitude));
+		elStarting_Point_Altitude_orbital_velosity.textContent = Starting_Point_Altitude_orbital_velosity;
+		
+		var Absolute_orbital_velocity = Math.sqrt(398730000000/(6378+Orbit_Perigee));
+		elAbsolute_orbital_velocity.textContent = Absolute_orbital_velocity;
+		
+		var Orbital_velocity = Math.sqrt(Launch_point_speed*Launch_point_speed + Absolute_orbital_velocity*Absolute_orbital_velocity
+										-2.0*Launch_point_speed*Absolute_orbital_velocity*Math.sin(Deg2Rad(Intermediate_angle)));
+		elOrbital_velocity.textContent = Orbital_velocity;
+		
+		var Orbital_velocity_increment_due_to_the_Earth_rotation = Absolute_orbital_velocity - Orbital_velocity;
+		elOrbital_velocity_increment_due_to_the_Earth_rotation.textContent = Orbital_velocity_increment_due_to_the_Earth_rotation;
+		
+		var Launch_azimuth = Rad2Deg(Math.acos(Absolute_orbital_velocity/Orbital_velocity*Math.cos(Deg2Rad(Intermediate_angle))));
+		elLaunch_azimuth.textContent = Launch_azimuth;
+		
+		var Specific_velocity_for_circular_orbit = Starting_Point_Altitude_orbital_velosity
+				+Starting_Point_Altitude_orbital_velosity*(7906.0/Math.sqrt(0.5*(Starting_Point_Altitude_orbital_velosity*Starting_Point_Altitude_orbital_velosity+Absolute_orbital_velocity*Absolute_orbital_velocity))-1.0)
+				+Absolute_orbital_velocity*(1.0-Absolute_orbital_velocity/Math.sqrt(0.5*(Starting_Point_Altitude_orbital_velosity*Starting_Point_Altitude_orbital_velosity+Absolute_orbital_velocity*Absolute_orbital_velocity)))
+				-Orbital_velocity_increment_due_to_the_Earth_rotation;
+		elSpecific_velocity_for_circular_orbit.textContent = Specific_velocity_for_circular_orbit;
+		
+		var Specific_velocity_for_target_orbit = (Orbit_Apogee == 0) ?
+			Specific_velocity_for_circular_orbit : 
+			(Specific_velocity_for_circular_orbit
+			  +Absolute_orbital_velocity*(Absolute_orbital_velocity/Math.sqrt(0.5*(Absolute_orbital_velocity*Absolute_orbital_velocity+398730000000.0/(6378.0+Orbit_Apogee)))-1.0));
+		elSpecific_velocity_for_target_orbit.textContent = Specific_velocity_for_target_orbit;
+		
+		var Specific_velocity_for_LEO = 8026.0-Orbital_velocity_increment_due_to_the_Earth_rotation-Additional_Speed;
+		elSpecific_velocity_for_LEO.textContent = Specific_velocity_for_LEO;
+	}
+	
+	function onPageLoad()
+	{
+		Calculate();
+	}
+
+</script>
+
+</body>
+</html>
