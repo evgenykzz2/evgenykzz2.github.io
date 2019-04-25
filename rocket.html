@@ -69,16 +69,20 @@
 </td>
 
 <td>
-	<select>
+	<select id="StartingPoint">
 		<option>Canaveral</option>
+		<option>Baikonur</option>
+		<option>Sea Launch</option>
+		<option>Rocket Lab LC-1</option>
+		<option>Camden</option>
 	</select>
 	<table border="1">
-	<tr><td>Starting Point Altitude</td><td> <label id="Starting_Point_Altitude"value=0>0</label>       </td><td>Km</td></tr>
-	<tr><td>Additional Speed</td><td> <label id="Additional_Speed"              value=0>0</label>       </td><td>m/s</td></tr>
-	<tr><td>Orbit Perigee</td><td> <label id="Orbit_Perigee"                    value=200>200</label>   </td><td>Km</td></tr>
-	<tr><td>Orbit Apogee</td><td> <label id="Orbit_Apogee"                      value=0>0</label>       </td><td>Km</td></tr>
-	<tr><td>Spaceport latitude</td><td> <label id="Spaceport_latitude"          value=28.5>28.5</label> </td><td>grad</td></tr>
-	<tr><td>Orbit Inclination</td><td> <label id="Orbit_Inclination"            value=28.5>28.5</label> </td><td>grad</td></tr>
+	<tr><td>Starting Point Altitude</td><td> <input id="Starting_Point_Altitude">           </td><td>Km</td></tr>
+	<tr><td>Additional Speed</td><td> <input id="Additional_Speed"              value=0>    </td><td>m/s</td></tr>
+	<tr><td>Orbit Perigee</td><td> <input id="Orbit_Perigee"                    value=200>  </td><td>Km</td></tr>
+	<tr><td>Orbit Apogee</td><td> <input id="Orbit_Apogee"                      value=0>    </td><td>Km</td></tr>
+	<tr><td>Spaceport latitude</td><td> <input id="Spaceport_latitude"          >           </td><td>grad</td></tr>
+	<tr><td>Orbit Inclination</td><td> <input id="Orbit_Inclination"            value=28.5> </td><td>grad</td></tr>
 	
 	<tr><td>Intermediate angle</td><td> <label id="Intermediate_angle"    ></label></td><td>grad</td></tr>
 	<tr><td>Launch azimuth</td><td> <label id="Launch_azimuth"            ></label></td><td>grad</td></tr>
@@ -94,18 +98,32 @@
 	</table>	
 </td>
 
+<td>
+	<table border="1">
+	<tr><td>Gravity losses at specific altitude</td><td> <label id="Gravity_losses_at_specific_altitude"    ></label></td><td>m/s</td></tr>
+	<tr><td>Gravity losses</td><td> <label id="Gravity_losses"            ></label></td><td>m/s</td></tr>
+	<tr><td>Aerodynamic losses</td><td> <label id="Aerodynamic_losses"    ></label></td><td>m/s</td></tr>
+	<tr><td>Summary losses</td><td> <label id="Summary_losses"    ></label></td><td>m/s</td></tr>
+	<tr><td>Assumed losses</td><td> <label id="Assumed_losses"    ></label></td><td>%</td></tr>
+	<tr><td>Specific velocity with losses</td><td> <label id="Specific_velocity_with_losses"    ></label></td><td>m/s</td></tr>
+	</table>	
+</td>
+
 </tr>
 
 </table>
 </div>
 
 <script>
+	var elStartingPoint = document.querySelector('#StartingPoint');
+
 	var elStarting_Point_Altitude = document.querySelector('#Starting_Point_Altitude');
 	var elAdditional_Speed = document.querySelector('#Additional_Speed');
 	var elOrbit_Perigee = document.querySelector('#Orbit_Perigee');
 	var elOrbit_Apogee = document.querySelector('#Orbit_Apogee');
 	var elSpaceport_latitude = document.querySelector('#Spaceport_latitude');
 	var elOrbit_Inclination = document.querySelector('#Orbit_Inclination');
+
 	var elIntermediate_angle = document.querySelector('#Intermediate_angle');
 	var elLaunch_azimuth = document.querySelector('#Launch_azimuth');
 	var elLaunch_point_speed = document.querySelector('#Launch_point_speed');
@@ -116,6 +134,13 @@
 	var elSpecific_velocity_for_circular_orbit = document.querySelector('#Specific_velocity_for_circular_orbit');
 	var elSpecific_velocity_for_target_orbit = document.querySelector('#Specific_velocity_for_target_orbit');
 	var elSpecific_velocity_for_LEO = document.querySelector('#Specific_velocity_for_LEO');
+	
+	var elGravity_losses_at_specific_altitude = document.querySelector('#Gravity_losses_at_specific_altitude');
+	var elGravity_losses = document.querySelector('#Gravity_losses');
+	var elAerodynamic_losses = document.querySelector('#Aerodynamic_losses');
+	var elSummary_losses = document.querySelector('#Summary_losses');
+	var elAssumed_losses = document.querySelector('#Assumed_losses');
+	var elSpecific_velocity_with_losses = document.querySelector('#Specific_velocity_with_losses');
 	
 	window.onload = onPageLoad;
 	
@@ -131,56 +156,100 @@
 	
 	function Calculate()
 	{
-		var Starting_Point_Altitude = parseFloat(elStarting_Point_Altitude.getAttribute("value"));
-		var Additional_Speed = parseFloat(elAdditional_Speed.getAttribute("value"));
-		var Orbit_Perigee = parseFloat(elOrbit_Perigee.getAttribute("value"));
-		var Orbit_Apogee = parseFloat(elOrbit_Apogee.getAttribute("value"));
-		var Spaceport_latitude = parseFloat(elSpaceport_latitude.getAttribute("value"));
-		var Orbit_Inclination = parseFloat(elOrbit_Inclination.getAttribute("value"));
+		var Starting_Point_Altitude = parseFloat(elStarting_Point_Altitude.value);
+		var Additional_Speed = parseFloat(elAdditional_Speed.value);
+		var Orbit_Perigee = parseFloat(elOrbit_Perigee.value);
+		var Orbit_Apogee = parseFloat(elOrbit_Apogee.value);
+		var Spaceport_latitude = parseFloat(elSpaceport_latitude.value);
+		var Orbit_Inclination = parseFloat(elOrbit_Inclination.value);
 		
 		var Intermediate_angle = Orbit_Inclination > Spaceport_latitude ?
 				(Rad2Deg(Math.asin(Math.cos(Deg2Rad(Orbit_Inclination))/Math.cos(Deg2Rad(Spaceport_latitude))))) :
 				(90.0-Rad2Deg(Math.asin(1.0-(Math.cos(Deg2Rad(Orbit_Inclination))/Math.cos(Deg2Rad(Spaceport_latitude))))));
-		elIntermediate_angle.textContent = Intermediate_angle;
+		elIntermediate_angle.textContent = Intermediate_angle.toFixed(2);
 		
 		var Launch_point_speed = 460.0*Math.cos(Deg2Rad(Spaceport_latitude));
-		elLaunch_point_speed.textContent = Launch_point_speed;
+		elLaunch_point_speed.textContent = Launch_point_speed.toFixed(2);
 		
 		var Starting_Point_Altitude_orbital_velosity = Math.sqrt(398730000000/(6378+Starting_Point_Altitude));
-		elStarting_Point_Altitude_orbital_velosity.textContent = Starting_Point_Altitude_orbital_velosity;
+		elStarting_Point_Altitude_orbital_velosity.textContent = Starting_Point_Altitude_orbital_velosity.toFixed(2);
 		
 		var Absolute_orbital_velocity = Math.sqrt(398730000000/(6378+Orbit_Perigee));
-		elAbsolute_orbital_velocity.textContent = Absolute_orbital_velocity;
+		elAbsolute_orbital_velocity.textContent = Absolute_orbital_velocity.toFixed(2);
 		
 		var Orbital_velocity = Math.sqrt(Launch_point_speed*Launch_point_speed + Absolute_orbital_velocity*Absolute_orbital_velocity
 										-2.0*Launch_point_speed*Absolute_orbital_velocity*Math.sin(Deg2Rad(Intermediate_angle)));
-		elOrbital_velocity.textContent = Orbital_velocity;
+		elOrbital_velocity.textContent = Orbital_velocity.toFixed(2);
 		
 		var Orbital_velocity_increment_due_to_the_Earth_rotation = Absolute_orbital_velocity - Orbital_velocity;
-		elOrbital_velocity_increment_due_to_the_Earth_rotation.textContent = Orbital_velocity_increment_due_to_the_Earth_rotation;
+		elOrbital_velocity_increment_due_to_the_Earth_rotation.textContent = Orbital_velocity_increment_due_to_the_Earth_rotation.toFixed(2);
 		
 		var Launch_azimuth = Rad2Deg(Math.acos(Absolute_orbital_velocity/Orbital_velocity*Math.cos(Deg2Rad(Intermediate_angle))));
-		elLaunch_azimuth.textContent = Launch_azimuth;
+		elLaunch_azimuth.textContent = Launch_azimuth.toFixed(2);
 		
 		var Specific_velocity_for_circular_orbit = Starting_Point_Altitude_orbital_velosity
 				+Starting_Point_Altitude_orbital_velosity*(7906.0/Math.sqrt(0.5*(Starting_Point_Altitude_orbital_velosity*Starting_Point_Altitude_orbital_velosity+Absolute_orbital_velocity*Absolute_orbital_velocity))-1.0)
 				+Absolute_orbital_velocity*(1.0-Absolute_orbital_velocity/Math.sqrt(0.5*(Starting_Point_Altitude_orbital_velosity*Starting_Point_Altitude_orbital_velosity+Absolute_orbital_velocity*Absolute_orbital_velocity)))
 				-Orbital_velocity_increment_due_to_the_Earth_rotation;
-		elSpecific_velocity_for_circular_orbit.textContent = Specific_velocity_for_circular_orbit;
+		elSpecific_velocity_for_circular_orbit.textContent = Specific_velocity_for_circular_orbit.toFixed(2);
 		
 		var Specific_velocity_for_target_orbit = (Orbit_Apogee == 0) ?
 			Specific_velocity_for_circular_orbit : 
 			(Specific_velocity_for_circular_orbit
 			  +Absolute_orbital_velocity*(Absolute_orbital_velocity/Math.sqrt(0.5*(Absolute_orbital_velocity*Absolute_orbital_velocity+398730000000.0/(6378.0+Orbit_Apogee)))-1.0));
-		elSpecific_velocity_for_target_orbit.textContent = Specific_velocity_for_target_orbit;
+		elSpecific_velocity_for_target_orbit.textContent = Specific_velocity_for_target_orbit.toFixed(2);
 		
 		var Specific_velocity_for_LEO = 8026.0-Orbital_velocity_increment_due_to_the_Earth_rotation-Additional_Speed;
-		elSpecific_velocity_for_LEO.textContent = Specific_velocity_for_LEO;
+		elSpecific_velocity_for_LEO.textContent = Specific_velocity_for_LEO.toFixed(2);
+		
+		/*var Gravity_losses_at_specific_altitude = 9.81*(500.0/SQRT((1.015*(((D32-1)*9.81)*((EXP(112.13/((D48-(D48-D47)*0.169)+(((D48-(D48-D47)*0.169)-D47)*1)/((1-0.169)*1.8872)*(-0.8612))))*((D48-(D48-D47)*0.169)/D47)*((D32-1)*9.81)-(1-(EXP(112.13/((D48-(D48-D47)*0.169)+(((D48-(D48-D47)*0.169)-D47)*1)/((1-0.169)*1.8872)*(-0.8612))))*((D48-(D48-D47)*0.169)/D47))*9.81))^0.5)*9.81))
+		var elGravity_losses_at_specific_altitude = document.querySelector('#Gravity_losses_at_specific_altitude');
+		var elGravity_losses = document.querySelector('#Gravity_losses');
+		var elAerodynamic_losses = document.querySelector('#Aerodynamic_losses');
+		var elSummary_losses = document.querySelector('#Summary_losses');
+		var elAssumed_losses = document.querySelector('#Assumed_losses');
+		var elSpecific_velocity_with_losses = document.querySelector('#Specific_velocity_with_losses');*/
+	}
+	
+	function updateStartingPoint()
+	{
+		var StartingPoint = elStartingPoint.options[elStartingPoint.selectedIndex].text;
+		if (StartingPoint == "Canaveral")
+		{
+			elStarting_Point_Altitude.value = 0.1;
+			elSpaceport_latitude.value = 28.5;
+		} else if (StartingPoint == "Baikonur")
+		{
+			elStarting_Point_Altitude.value = 0.1;
+			elSpaceport_latitude.value = 45.57;
+		} else if (StartingPoint == "Sea Launch")
+		{
+			elStarting_Point_Altitude.value = 0;
+			elSpaceport_latitude.value = 0;
+		} else if (StartingPoint == "Rocket Lab LC-1")
+		{
+			elStarting_Point_Altitude.value = 0.1;
+			elSpaceport_latitude.value = 39.25;
+		} else if (StartingPoint == "Camden")
+		{
+			elStarting_Point_Altitude.value = 0;
+			elSpaceport_latitude.value = 30.91;
+		}
+		Calculate();
 	}
 	
 	function onPageLoad()
 	{
-		Calculate();
+		elStartingPoint.addEventListener('change', updateStartingPoint);
+		
+		elStarting_Point_Altitude.addEventListener('change', Calculate);
+		elAdditional_Speed.addEventListener('change', Calculate);
+		elOrbit_Perigee.addEventListener('change', Calculate);
+		elOrbit_Apogee.addEventListener('change', Calculate);
+		elSpaceport_latitude.addEventListener('change', Calculate);
+		elOrbit_Inclination.addEventListener('change', Calculate);
+	
+		updateStartingPoint();
 	}
 
 </script>
