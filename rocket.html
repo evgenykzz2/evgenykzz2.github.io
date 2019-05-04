@@ -77,7 +77,7 @@
 	<tr><td>Lift-off Mass</td><td> <input id="Lift_off_Mass">                             </td><td>Kg</td></tr>
 	<tr><td>Fairing mass</td><td> <input id="Fairing_mass">                               </td><td>Kg</td></tr>
 	<tr><td>Fairing jettison velocity</td><td> <input id="Fairing_jettison_velocity">     </td><td>m/s</td></tr>
-	<tr><td>Fairing jettison specific velocity</td><td> <label id="Fairing_jettison_specific_velocity "    ></label></td><td>m/s</td></tr>
+	<tr><td>Fairing jettison specific velocity</td><td> <label id="Fairing_jettison_specific_velocity"    ></label></td><td>m/s</td></tr>
 
 	<tr><td>Assumed payload mass</td><td> <input id="Assumed_payload_mass" value="750">                   </td><td>Kg</td></tr>
 	
@@ -360,10 +360,10 @@
 		var Launch_point_speed = 460.0*Math.cos(Deg2Rad(Spaceport_latitude));
 		elLaunch_point_speed.textContent = Launch_point_speed.toFixed(2);
 		
-		var Starting_Point_Altitude_orbital_velosity = Math.sqrt(398730000000/(6378+Starting_Point_Altitude));
+		var Starting_Point_Altitude_orbital_velosity = Math.sqrt(398730000000.0/(6378.0));
 		elStarting_Point_Altitude_orbital_velosity.textContent = Starting_Point_Altitude_orbital_velosity.toFixed(2);
 		
-		var Absolute_orbital_velocity = Math.sqrt(398730000000/(6378+Orbit_Perigee));
+		var Absolute_orbital_velocity = Math.sqrt(398730000000.0/(6378.0+Orbit_Perigee));
 		elAbsolute_orbital_velocity.textContent = Absolute_orbital_velocity.toFixed(2);
 		
 		var Orbital_velocity = Math.sqrt(Launch_point_speed*Launch_point_speed + Absolute_orbital_velocity*Absolute_orbital_velocity
@@ -404,13 +404,14 @@
 		var v2nd_Dry_to_Wet_mass_Ratio = parseFloat(el2nd_Dry_to_Wet_mass_Ratio.value);
 		var Unused_propellant_of_1st_Stage = parseFloat(elUnused_propellant_of_1st_Stage.value);
 		var Unused_propellant_of_2nd_Stage = parseFloat(elUnused_propellant_of_2nd_Stage.value);
+		var Second_stage_isp_vac = parseFloat(elSecond_stage_isp_vac.value);
+		var Transfer_Orbit_Stage_isp = parseFloat(elTransfer_Orbit_Stage_isp.value);
+		var Transfer_Orbit_Stage_mass_Ratio = parseFloat(elTransfer_Orbit_Stage_mass_Ratio.value);
+		var Unused_propellant_of_Transfer_Orbit_Stage = parseFloat(elUnused_propellant_of_Transfer_Orbit_Stage.value);
 		
 		var Payload_to_Lift_off_mass_Ratio = Assumed_payload_mass / Lift_off_Mass;
 		elPayload_to_Lift_off_mass_Ratio.textContent = (Payload_to_Lift_off_mass_Ratio * 100.0).toFixed(2);
 		
-		//var Fairing_jettison_specific_velocity = Fairing_jettison_velocity*1.2 ? 
-		//elFairing_jettison_specific_velocity
-		//=IF(D35*1.2>D54,D35*1.2,D54+100)
 		
 		var Gravity_losses_at_specific_altitude = 9.81*(500.0/Math.sqrt((1.015*Math.sqrt((((Thrust_to_weight_ratio-1.0)*9.81)*
 				((Math.exp(112.13/((First_stage_isp_vac-(First_stage_isp_vac-First_stage_isp_sea_level_or_at_the_start_altitude)*0.169)+
@@ -457,58 +458,67 @@
 		var First_stage_specific_velocity = 9.80665*First_stage_average_trajectory_isp*Math.log(Lift_off_Mass/First_stage_final_mass);
 		elFirst_stage_specific_velocity.textContent = First_stage_specific_velocity.toFixed(2);
 		
+
+		var Fairing_jettison_specific_velocity = (Fairing_jettison_velocity*1.2 > First_stage_specific_velocity) ? Fairing_jettison_velocity*1.2 : First_stage_specific_velocity+100;
+		elFairing_jettison_specific_velocity.textContent = Fairing_jettison_specific_velocity.toFixed(2);
 		
-		/*var Second_stage_total_Start_mass = Lift_off_Mass*(v2nd_Stage_mass_Ratio/100);
+		var Second_stage_total_Start_mass = Lift_off_Mass*(v2nd_Stage_mass_Ratio/100);
 		elSecond_stage_total_Start_mass.textContent = Second_stage_total_Start_mass.toFixed(2);
 
 		var Second_stage_total_mass_before_fairing_jettison =1.0/(Math.exp((Fairing_jettison_specific_velocity-First_stage_specific_velocity)/(Second_stage_isp_vac*9.80665))/Second_stage_total_Start_mass);
 		elSecond_stage_total_mass_before_fairing_jettison.textContent = Second_stage_total_mass_before_fairing_jettison.toFixed(2);
 
-		var Second_stage_final_mass = v3rd_Stage_mass_Ratio == 0 :
-			1.0/(Math.exp((D59-(Fairing_jettison_specific_velocity-First_stage_specific_velocity))/
-				(Second_stage_isp_vac*9.80665))/(Second_stage_total_mass_before_fairing_jettison-Fairing_mass)) :
-			Second_stage_total_Start_mass-((Lift_off_Mass*(v2nd_Stage_mass_Ratio-v3rd_Stage_mass_Ratio)/100)*
-				(1-v2nd_Dry_to_Wet_mass_Ratio/100))/100*(100-Unused_propellant_of_2nd_Stage)) ;
+		var Second_stage_final_mass;
+		var Second_stage_specific_velocity;
+		if (v3rd_Stage_mass_Ratio == 0)
+		{
+			Second_stage_specific_velocity = (Specific_velocity_with_losses-First_stage_specific_velocity);
+			Second_stage_final_mass = 1.0/(Math.exp((Second_stage_specific_velocity-(Fairing_jettison_specific_velocity-First_stage_specific_velocity))/
+				(Second_stage_isp_vac*9.80665))/(Second_stage_total_mass_before_fairing_jettison-Fairing_mass));
+		} else
+		{
+			Second_stage_final_mass = Second_stage_total_Start_mass-((Lift_off_Mass*(v2nd_Stage_mass_Ratio-v3rd_Stage_mass_Ratio)/100)*
+					(1.0-v2nd_Dry_to_Wet_mass_Ratio/100))/100*(100-Unused_propellant_of_2nd_Stage);
+			Second_stage_specific_velocity =
+				(9.80665*Second_stage_isp_vac*Math.log(Second_stage_total_Start_mass/Second_stage_total_mass_before_fairing_jettison)
+				+9.80665*Second_stage_isp_vac*Math.log((Second_stage_total_mass_before_fairing_jettison-Fairing_mass)/Second_stage_final_mass));
+		}
 		elSecond_stage_final_mass.textContent = Second_stage_final_mass.toFixed(2);
-
-		var Second_stage_specific_velocity = v3rd_Stage_mass_Ratio == 0 ? (Specific_velocity_with_losses-First_stage_specific_velocity) :
-			(9.80665*Second_stage_isp_vac*Math.log(Second_stage_total_Start_mass/Second_stage_total_mass_before_fairing_jettison)
-			+9.80665*Second_stage_isp_vac*Math.log((Second_stage_total_mass_before_fairing_jettison-Fairing_mass)/Second_stage_final_mass));
 		elSecond_stage_specific_velocity.textContent = Second_stage_specific_velocity.toFixed(2);
 		
 		var Second_stage_dry_mass = v3rd_Stage_mass_Ratio == 0 ?
 				(Second_stage_total_Start_mass-Fairing_mass-Assumed_payload_mass)*v2nd_Dry_to_Wet_mass_Ratio/100 :
 				(Second_stage_total_Start_mass-Second_stage_final_mass)*(1+Unused_propellant_of_2nd_Stage/100)/
-					(1.0/(v2nd_Dry_to_Wet_mass_Ratio/100)-1));
+					(1.0/(v2nd_Dry_to_Wet_mass_Ratio/100)-1);
 		elSecond_stage_dry_mass.textContent = Second_stage_dry_mass.toFixed(2);
 		
-		var Second_stage_propellant_mass = Second_stage_dry_mass*(100/v2nd_Dry_to_Wet_mass_Ratio)-Second_stage_dry_mass;
-		elSecond_stage_propellant_mass.textContent = Second_stage_propellant_mass.toFixed(2);*/
+		var Second_stage_propellant_mass = Second_stage_dry_mass*(100.0/v2nd_Dry_to_Wet_mass_Ratio)-Second_stage_dry_mass;
+		elSecond_stage_propellant_mass.textContent = Second_stage_propellant_mass.toFixed(2);
 		
-		/*var Transfer_Orbit_stage_specific_velocity_required = v3rd_Stage_mass_Ratio == 0 ? 0 :
-			Specific_velocity_with_losses-First_stage_specific_velocity-Second_stage_specific_velocity);
+		var Transfer_Orbit_stage_specific_velocity_required = v3rd_Stage_mass_Ratio == 0 ? 0 :
+			(Specific_velocity_with_losses-First_stage_specific_velocity-Second_stage_specific_velocity);
 		elTransfer_Orbit_stage_specific_velocity_required.textContent = Transfer_Orbit_stage_specific_velocity_required.toFixed(2);
 		
-		var Transfer_Orbit_stage_total_Start_mass = Second_stage_final_mass-Second_stage_dry_mass-D63/100*Unused_propellant_of_2nd_Stage;
+		var Transfer_Orbit_stage_total_Start_mass = Second_stage_final_mass-Second_stage_dry_mass-Second_stage_propellant_mass/100*Unused_propellant_of_2nd_Stage;
 		elTransfer_Orbit_stage_total_Start_mass.textContent = Transfer_Orbit_stage_total_Start_mass.toFixed(2);
 		
-		var Transfer_Orbit_stage_final_mass = 1.0/(Math.exp(D66/(D50*9.80665))/D67) ;
+		var Transfer_Orbit_stage_final_mass = 1.0/(Math.exp(Transfer_Orbit_stage_specific_velocity_required/(Transfer_Orbit_Stage_isp*9.80665))/Transfer_Orbit_stage_total_Start_mass) ;
 		elTransfer_Orbit_stage_final_mass.textContent = Transfer_Orbit_stage_final_mass.toFixed(2);
+
+		var Transfer_Orbit_stage_dry_mass = v3rd_Stage_mass_Ratio == 0 ? 0 :
+			((Lift_off_Mass*v3rd_Stage_mass_Ratio/100-Fairing_mass-Assumed_payload_mass)*Transfer_Orbit_Stage_mass_Ratio/100);
+		elTransfer_Orbit_stage_dry_mass.textContent = Transfer_Orbit_stage_dry_mass.toFixed(2);
 		
-		var Transfer_Orbit_stage_propellant_mass = D70*(100/D43)-D70 ;
+		var Transfer_Orbit_stage_propellant_mass = Transfer_Orbit_stage_dry_mass*(100/Transfer_Orbit_Stage_mass_Ratio)-Transfer_Orbit_stage_dry_mass ;
 		elTransfer_Orbit_stage_propellant_mass.textContent = Transfer_Orbit_stage_propellant_mass.toFixed(2);
 		
-		var Transfer_Orbit_stage_dry_mass = v3rd_Stage_mass_Ratio == 0 ? 0 :
-			(Lift_off_Mass*v3rd_Stage_mass_Ratio/100-Fairing_mass-Assumed_payload_mass)*D43/100);
-		elTransfer_Orbit_stage_dry_mass.textContent = Transfer_Orbit_stage_dry_mass.toFixed(2);*/
-		
 		//=== Result ===
-		/*var Payload_mass_calculated = v3rd_Stage_mass_Ratio == 0 ? D67 :
-			D68-D70-D69/100*D46);
+		var Payload_mass_calculated = v3rd_Stage_mass_Ratio == 0 ? Transfer_Orbit_stage_total_Start_mass :
+			(Transfer_Orbit_stage_final_mass-Transfer_Orbit_stage_dry_mass-Transfer_Orbit_stage_propellant_mass/100*Unused_propellant_of_Transfer_Orbit_Stage);
 		elPayload_mass_calculated.textContent = Payload_mass_calculated.toFixed(2);
 		
-		var Payload_change = D73/Assumed_payload_mass;
-		elPayload_change.textContent = Payload_change.toFixed(2);*/
+		var Payload_change = Payload_mass_calculated/Assumed_payload_mass;
+		elPayload_change.textContent = (Payload_change * 100.0).toFixed(2);
 	}
 	
 	function updateStartingPoint()
@@ -543,10 +553,6 @@
 		elFirst_stage_isp_vac.value = s_rocket_data[elRocket.selectedIndex][14];
 		elSecond_stage_isp_vac.value = s_rocket_data[elRocket.selectedIndex][15];
 		elTransfer_Orbit_Stage_isp.value = s_rocket_data[elRocket.selectedIndex][16];
-		
-		//elStarting_Point_Altitude.value = 
-		//elSpaceport_latitude.value = s_start_point_data[elStartingPoint.selectedIndex][1];
-		
 	}
 	
 	function updateRocketAndCalc()
@@ -589,6 +595,25 @@
 		elOrbit_Apogee.addEventListener('change', Calculate);
 		elSpaceport_latitude.addEventListener('change', Calculate);
 		elOrbit_Inclination.addEventListener('change', Calculate);
+		
+		elThrust_to_weight_ratio.addEventListener('change', Calculate);
+		elLift_off_Mass.addEventListener('change', Calculate);
+		elFairing_mass.addEventListener('change', Calculate);
+		elFairing_jettison_velocity.addEventListener('change', Calculate);
+		elAssumed_payload_mass.addEventListener('change', Calculate);
+		el2nd_Stage_mass_Ratio.addEventListener('change', Calculate);
+		el3rd_Stage_mass_Ratio.addEventListener('change', Calculate);
+		
+		el1st_Dry_to_Wet_mass_Ratio.addEventListener('change', Calculate);
+		el2nd_Dry_to_Wet_mass_Ratio.addEventListener('change', Calculate);
+		elTransfer_Orbit_Stage_mass_Ratio.addEventListener('change', Calculate);
+		elUnused_propellant_of_1st_Stage.addEventListener('change', Calculate);
+		elUnused_propellant_of_2nd_Stage.addEventListener('change', Calculate);
+		elUnused_propellant_of_Transfer_Orbit_Stage.addEventListener('change', Calculate);
+		elFirst_stage_isp_sea_level_or_at_the_start_altitude.addEventListener('change', Calculate);
+		elFirst_stage_isp_vac.addEventListener('change', Calculate);
+		elSecond_stage_isp_vac.addEventListener('change', Calculate);
+		elTransfer_Orbit_Stage_isp.addEventListener('change', Calculate);
 		
 		updateRocket();
 		updateStartingPoint();
