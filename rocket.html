@@ -337,23 +337,22 @@
 						   [10, 11, 30, 3, 3,   5, 320, 355, 375, 370],
 						   [14, 14, 30, 3, 3,   5, 370, 430, 470, 370]];
 	
-	var s_rocket_count = 16;
-	var s_rocket_data = [["Rocket 1",                      1.19,  33400,  150,  3500, 771,   26.94, 0,    8,     10,     20,    1.5, 1.5, 1,   290.5, 327,   365, 320, "Lox/RP-1",   "Canaveral",       "LEO"],
-						 ["Rocket 2",                      1.19,  33400,  100,  3500, 458,   26.94, 5,    9.92,  12.38,  20,    2,   2,   1,   282.0, 321,   352, 320, "Lox/RP-1",   "Canaveral",       "SSO"],
-						 ["Zenit-2",                       1.605, 459000, 1800, 3500, 13470, 23.20, 0,    7.93,  9.15,   20,    1.2, 1.2, 0.8, 309.0, 336,   349, 352, "Lox/RG-1",   "Baikonur",        "LEO"],
-						 ["Zenit-3SL",                     1.57,  468240, 1850, 3500, 3170,  24.32, 4.88, 7.78,  9.15,   14.42, 1.2, 1.2, 0.8, 309.5, 337.2, 349, 361, "Lox/RG-1",   "Sea Launch",      "GEO"],
+	var s_rocket_count = 15;
+	var s_rocket_data = [["Rocket 1",                      1.19,  33400,  150,  3500, 771,   26.94, 0,    8,     10,     20,    1.5, 1.5, 1,   290.5, 327,   365, 320, "Lox/Kero",   "Canaveral",       "LEO"],
+						 ["Rocket 2",                      1.19,  33400,  100,  3500, 458,   26.94, 5,    9.92,  12.38,  20,    2,   2,   1,   282.0, 321,   352, 320, "Lox/Kero",   "Canaveral",       "SSO"],
+						 ["Zenit-2",                       1.605, 459000, 1800, 3500, 13470, 23.20, 0,    7.93,  9.15,   20,    1.2, 1.2, 0.8, 309.0, 336,   349, 352, "Lox/Kero",   "Baikonur",        "LEO"],
+						 ["Zenit-3SL",                     1.57,  468240, 1850, 3500, 3170,  24.32, 4.88, 7.78,  9.15,   14.42, 1.2, 1.2, 0.8, 309.5, 337.2, 349, 361, "Lox/Kero",   "Sea Launch",      "GEO"],
 						 ["Delta-IV Medium",               1.21,  264840, 2800, 4500, 11470, 14.51, 0,    11.70, 11.79,  20,    2,   2,   0.8, 360.0, 412,   462, 300, "Lox/LH2",    "Canaveral",       "LEO"],
-						 ["Vanguard II",                   1.36,  10100,     0, 3500, 10,    23.60, 2.18, 10.53, 32.07,  14.76, 2,   2,   0,   248.0, 270,   319, 250, "Mixt",       "Canaveral",       "LEO"],
-						 ["Falcon9 V1.0",                  1.22,  318000, 1000, 3500, 9000,  19.18, 0.00, 6.74,  5.96,   20.00, 1.5, 1.5, 1,   266.0, 304,   336, 300, "Lox/RP-1",   "Canaveral",       "LEO"],
-						 ["Falcon 1e",                     1.19,  47750,  145,  3500, 650,   11.90, 0.00, 6.13,  11.07,  20.00, 2,   2,   1,   263.0, 304,   317, 300, "Lox/RP-1",   "Canaveral",       "LEO"],
+						 ["Falcon9 V1.0",                  1.22,  318000, 1000, 3500, 9000,  19.18, 0.00, 6.74,  5.96,   20.00, 1.5, 1.5, 1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO"],
+						 ["Falcon 1e",                     1.19,  47750,  145,  3500, 650,   11.90, 0.00, 6.13,  11.07,  20.00, 2,   2,   1,   263.0, 304,   317, 300, "Lox/Kero",   "Canaveral",       "LEO"],
 						 ["Electron",                      1.32,  12550,  44,   3500, 240,   21.39, 0.00, 9.31,  10.42,  20.00, 2,   2,   1,   256.0, 303,   333, 240, "Lox/Kero",   "Rocket Lab LC-1", "LEO"],
 						 ["Electron Curie",                1.32,  12550,  44,   3500, 100,   21.39, 5.00, 9.31,  10.42,  20.00, 1.5, 1.5, 1,   256.0, 303,   333, 240, "Lox/Kero",   "Rocket Lab LC-1", "SSO"],
-						 ["Launcher One",                  1.44,  23300,  100,  3500, 300,   12.66, 0.00, 8.00,   9.00,  20.00, 2,   2,   1,   263.0, 304,   317, 300, "Lox/RP-1",   "Canaveral",       "SSO"],
+						 ["Launcher One",                  1.44,  23300,  100,  3500, 300,   12.66, 0.00, 8.00,   9.00,  20.00, 2,   2,   1,   263.0, 304,   317, 300, "Lox/Kero",   "Canaveral",       "SSO"],
 						 ["Terran 1 (Relativity)",         1.2,   52730,  400,  3500, 1250,  24.46, 0.00, 8.00,   9.00,  20.00, 2,   2,   1,   286.0, 326,   360, 300, "Lox/Methan", "Canaveral",       "LEO"],
-						 ["XS-1 tactical missile (Astra)", 1.6,   7560,   30,   3500, 100,   19.44, 0.00, 9.50,  10.00,  20.00, 2,   2,   1,   266.0, 304,   336, 300, "Lox/RP-1",   "Canaveral",       "LEO"],
-						 ["Firefly Alpha",                 1.25,  54000,  330,  3500, 1000,  25.00, 0.00, 7.50,  6.74,   20.00, 2,   2,   1,   265.0, 295,   322, 300, "Lox/RP-1",   "Canaveral",       "LEO"],
-						 ["abl RS1 Old",                   1.2,   26459,  300,  3500, 900,   15.75, 0.00, 5.00,  4.00,   20.00, 2,   2,   1,   262.0, 308,   345, 300, "Lox/RP-1",   "Camden",          "LEO"],
-						 ["abl RS1",                       1.2,   47627,  400,  3500, 1200,  18.06, 0.00, 5.00,  5.00,   20.00, 2,   2,   1,   265.0, 295.6, 322, 300, "Lox/RP-1",   "Camden",          "LEO"]
+						 ["XS-1 tactical missile (Astra)", 1.6,   7560,   30,   3500, 100,   19.44, 0.00, 9.50,  10.00,  20.00, 2,   2,   1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO"],
+						 ["Firefly Alpha",                 1.25,  54000,  330,  3500, 1000,  25.00, 0.00, 7.50,  6.74,   20.00, 2,   2,   1,   265.0, 295,   322, 300, "Lox/Kero",   "Canaveral",       "LEO"],
+						 ["abl RS1 Old",                   1.2,   26459,  300,  3500, 900,   15.75, 0.00, 5.00,  4.00,   20.00, 2,   2,   1,   262.0, 308,   345, 300, "Lox/Kero",   "Camden",          "LEO"],
+						 ["abl RS1",                       1.2,   47627,  400,  3500, 1200,  18.06, 0.00, 5.00,  5.00,   20.00, 2,   2,   1,   265.0, 295.6, 322, 300, "Lox/Kero",   "Camden",          "LEO"]
 						 ];
 	
 	function Rad2Deg(radians)
@@ -571,10 +570,57 @@
 			elOrbit_Inclination.value = s_orbit_data[elOrbit.selectedIndex][3];
 	}
 	
+	function RangeMinMax(range, input_field, val_min, val_max)
+	{
+		var input_value = parseFloat(input_field.value);
+		if (input_value < val_min)
+			input_field.value = val_min;
+		if (input_value > val_max)
+			input_field.value = val_max;
+
+		if ("min" in range)
+			range.min = val_min * 100;
+		else
+            range.setAttribute("min", val_min * 100);
+			
+		if ("max" in range)
+			range.max = val_max * 100;
+		else
+            range.setAttribute("max", val_max * 100);
+			
+		range.value = input_value * 100;
+	}
+	
+	
+	function updateFuel()
+	{
+		var idx = elFuel.selectedIndex;
+		RangeMinMax(el1st_Dry_to_Wet_mass_Ratio_Range, el1st_Dry_to_Wet_mass_Ratio,				s_fuel_data_min[idx][0], s_fuel_data_max[idx][0]);
+		RangeMinMax(el2nd_Dry_to_Wet_mass_Ratio_Range, el2nd_Dry_to_Wet_mass_Ratio, 			s_fuel_data_min[idx][1], s_fuel_data_max[idx][1]);
+		RangeMinMax(elTransfer_Orbit_Stage_mass_Ratio_Range, elTransfer_Orbit_Stage_mass_Ratio, s_fuel_data_min[idx][2], s_fuel_data_max[idx][2]);
+	}
+	
+	function update1st_Dry_to_Wet_mass_Ratio_Range()
+	{
+		el1st_Dry_to_Wet_mass_Ratio.value = el1st_Dry_to_Wet_mass_Ratio_Range.value / 100.0;
+		Calculate();
+	}
+
+	function update1st_Dry_to_Wet_mass_Ratio()
+	{
+		if (el1st_Dry_to_Wet_mass_Ratio.value < s_fuel_data_min[elFuel.selectedIndex][0])
+			el1st_Dry_to_Wet_mass_Ratio.value = s_fuel_data_min[elFuel.selectedIndex][0];
+		if (el1st_Dry_to_Wet_mass_Ratio.value > s_fuel_data_max[elFuel.selectedIndex][0])
+			el1st_Dry_to_Wet_mass_Ratio.value = s_fuel_data_max[elFuel.selectedIndex][0];
+		el1st_Dry_to_Wet_mass_Ratio_Range.value = el1st_Dry_to_Wet_mass_Ratio.value * 100;
+		Calculate();
+	}
+	
 	function updateOrbitAndCalc()
 	{
 		updateOrbit();
 		Calculate();
+		updateFuel();
 	}
 	
 	function updateRocket()
@@ -619,7 +665,17 @@
 				break;
 			}
 		}
-		//fuel s_rocket_data[elRocket.selectedIndex][18];
+		
+		var fuel = s_rocket_data[elRocket.selectedIndex][18];
+		for (var i=0; i < s_fuel_count; ++i)
+		{
+			if ( s_fuel_name[i] == fuel )
+			{
+				elFuel.selectedIndex = i;
+				updateFuel();
+				break;
+			}
+		}
 	}
 	
 	function updateRocketAndCalc()
@@ -664,6 +720,9 @@
 			opt.innerHTML = s_fuel_name[i];
 			elFuel.appendChild(opt);
 		}
+		elFuel.addEventListener('change', updateFuel);
+		el1st_Dry_to_Wet_mass_Ratio_Range.addEventListener('change', update1st_Dry_to_Wet_mass_Ratio_Range);
+		el1st_Dry_to_Wet_mass_Ratio.addEventListener('change', update1st_Dry_to_Wet_mass_Ratio);
 		
 		elStarting_Point_Altitude.addEventListener('change', Calculate);
 		elAdditional_Speed.addEventListener('change', Calculate);
@@ -680,7 +739,6 @@
 		el2nd_Stage_mass_Ratio.addEventListener('change', Calculate);
 		el3rd_Stage_mass_Ratio.addEventListener('change', Calculate);
 		
-		el1st_Dry_to_Wet_mass_Ratio.addEventListener('change', Calculate);
 		el2nd_Dry_to_Wet_mass_Ratio.addEventListener('change', Calculate);
 		elTransfer_Orbit_Stage_mass_Ratio.addEventListener('change', Calculate);
 		elUnused_propellant_of_1st_Stage.addEventListener('change', Calculate);
@@ -694,6 +752,7 @@
 		updateRocket();
 		updateStartingPoint();
 		updateOrbit();
+		updateFuel();
 		Calculate();
 	}
 
