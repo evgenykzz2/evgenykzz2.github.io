@@ -130,10 +130,10 @@
 	<table border="1">
 	<tr><td>Starting Point Altitude</td><td> <input id="Starting_Point_Altitude">           </td><td>Km</td></tr>
 	<tr><td>Additional Speed</td><td> <input id="Additional_Speed"              value=0>    </td><td>m/s</td></tr>
-	<tr><td>Spaceport latitude</td><td> <input id="Spaceport_latitude"          >           </td><td>grad</td></tr>
+	<tr><td>Spaceport latitude</td><td> <input id="Spaceport_latitude"          >           </td><td>deg</td></tr>
 	
-	<tr><td>Intermediate angle</td><td> <label id="Intermediate_angle"    ></label></td><td>grad</td></tr>
-	<tr><td>Launch azimuth</td><td> <label id="Launch_azimuth"            ></label></td><td>grad</td></tr>
+	<tr><td>Intermediate angle</td><td> <label id="Intermediate_angle"    ></label></td><td>deg</td></tr>
+	<tr><td>Launch azimuth</td><td> <label id="Launch_azimuth"            ></label></td><td>deg</td></tr>
 	<tr><td>Launch point speed</td><td> <label id="Launch_point_speed"    ></label></td><td>m/s</td></tr>
 	<tr><td>Starting Point Altitude orbital velosity</td><td> <label id="Starting_Point_Altitude_orbital_velosity"    ></label></td><td>m/s</td></tr>
 	<tr><td>Absolute orbital velocity</td><td> <label id="Absolute_orbital_velocity"    ></label></td><td>m/s</td></tr>
@@ -155,7 +155,7 @@
 	<table border="1">
 	<tr><td>Orbit Perigee</td><td> <input id="Orbit_Perigee"                    value=200>  </td><td>Km</td></tr>
 	<tr><td>Orbit Apogee</td><td> <input id="Orbit_Apogee"                      value=0>    </td><td>Km</td></tr>
-	<tr><td>Orbit Inclination</td><td> <input id="Orbit_Inclination"            value=28.5> </td><td>grad</td></tr>	
+	<tr><td>Orbit Inclination</td><td> <input id="Orbit_Inclination"            value=28.5> </td><td>deg</td></tr>	
 	</table>	
 </td>
 </tr>
@@ -206,6 +206,10 @@
 <td>
 	<table border="1">
 	<tr><td>Payload mass (calculated)</td><td> <label id="Payload_mass_calculated"></label></td><td>Kg</td></tr>
+	<tr><td>Payload mass (2)</td><td> <label id="Payload_mass_calculated2"></label></td><td>Kg</td></tr>
+	<tr><td>Payload mass (3)</td><td> <label id="Payload_mass_calculated3"></label></td><td>Kg</td></tr>
+	<tr><td>Payload mass (4)</td><td> <label id="Payload_mass_calculated4"></label></td><td>Kg</td></tr>
+	<tr><td>Payload mass (5)</td><td> <label id="Payload_mass_calculated5"></label></td><td>Kg</td></tr>
 	<tr><td>Payload change</td><td> <label id="Payload_change"    ></label></td><td>%</td></tr>
 	</table>
 </td>
@@ -301,7 +305,11 @@
 	var elTransfer_Orbit_stage_propellant_mass = document.querySelector('#Transfer_Orbit_stage_propellant_mass');
 	var elTransfer_Orbit_stage_dry_mass = document.querySelector('#Transfer_Orbit_stage_dry_mass');
 
-	var elPayload_mass_calculated = document.querySelector('#Payload_mass_calculated');	
+	var elPayload_mass_calculated  = document.querySelector('#Payload_mass_calculated');
+	var elPayload_mass_calculated2 = document.querySelector('#Payload_mass_calculated2');
+	var elPayload_mass_calculated3 = document.querySelector('#Payload_mass_calculated3');
+	var elPayload_mass_calculated4 = document.querySelector('#Payload_mass_calculated4');
+	var elPayload_mass_calculated5 = document.querySelector('#Payload_mass_calculated5');
 	var elPayload_change = document.querySelector('#Payload_change');
 	
 	window.onload = onPageLoad;
@@ -365,7 +373,7 @@
 		return degrees * (Math.PI/180.0);
 	}
 	
-	function Calculate()
+	function CalculateTargetMass(Assumed_payload_mass, itteration)
 	{
 		var Starting_Point_Altitude = parseFloat(elStarting_Point_Altitude.value);
 		var Additional_Speed = parseFloat(elAdditional_Speed.value);
@@ -416,7 +424,6 @@
 		var Fairing_jettison_velocity = parseFloat(elFairing_jettison_velocity.value);
 		var Fairing_mass = parseFloat(elFairing_mass.value);
 		var Lift_off_Mass = parseFloat(elLift_off_Mass.value);
-		var Assumed_payload_mass = parseFloat(elAssumed_payload_mass.value);
 		var Thrust_to_weight_ratio = parseFloat(elThrust_to_weight_ratio.value);
 		var First_stage_isp_vac = parseFloat(elFirst_stage_isp_vac.value);
 		var First_stage_isp_sea_level_or_at_the_start_altitude = parseFloat(elFirst_stage_isp_sea_level_or_at_the_start_altitude.value);
@@ -537,10 +544,34 @@
 		//=== Result ===
 		var Payload_mass_calculated = v3rd_Stage_mass_Ratio == 0 ? Transfer_Orbit_stage_total_Start_mass :
 			(Transfer_Orbit_stage_final_mass-Transfer_Orbit_stage_dry_mass-Transfer_Orbit_stage_propellant_mass/100*Unused_propellant_of_Transfer_Orbit_Stage);
-		elPayload_mass_calculated.textContent = Payload_mass_calculated.toFixed(2);
-		
-		var Payload_change = Payload_mass_calculated/Assumed_payload_mass;
-		elPayload_change.textContent = (Payload_change * 100.0).toFixed(2);
+		if (itteration == 1)
+		{
+			elPayload_mass_calculated.textContent = Payload_mass_calculated.toFixed(2);
+		} else if (itteration == 2)
+		{
+			elPayload_mass_calculated2.textContent = Payload_mass_calculated.toFixed(2);
+		} else if (itteration == 3)
+		{
+			elPayload_mass_calculated3.textContent = Payload_mass_calculated.toFixed(2);
+		} else if (itteration == 4)
+		{
+			elPayload_mass_calculated4.textContent = Payload_mass_calculated.toFixed(2);
+		} else if (itteration == 5)
+		{
+			elPayload_mass_calculated5.textContent = Payload_mass_calculated.toFixed(2);
+			var Payload_change = Payload_mass_calculated/Assumed_payload_mass;
+			elPayload_change.textContent = (Payload_change * 100.0).toFixed(2);	
+		}
+		return Payload_mass_calculated;		
+	}
+
+	function Calculate()
+	{
+		var Assumed_payload_mass = parseFloat(elAssumed_payload_mass.value);
+		for (itt = 1; itt <= 5; ++itt)
+		{
+			Assumed_payload_mass = CalculateTargetMass(Assumed_payload_mass, itt);
+		}
 	}
 	
 	function updateStartingPoint()
