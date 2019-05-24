@@ -206,9 +206,6 @@
 <td>
 	<table border="1">
 	<tr><td>Payload mass (calculated)</td><td> <label id="Payload_mass_calculated"></label></td><td>Kg</td></tr>
-	<tr><td>Payload mass (2)</td><td> <label id="Payload_mass_calculated2"></label></td><td>Kg</td></tr>
-	<tr><td>Payload mass (3)</td><td> <label id="Payload_mass_calculated3"></label></td><td>Kg</td></tr>
-	<tr><td>Payload mass (4)</td><td> <label id="Payload_mass_calculated4"></label></td><td>Kg</td></tr>
 	<tr><td>Payload mass (5)</td><td> <label id="Payload_mass_calculated5"></label></td><td>Kg</td></tr>
 	<tr><td>Payload change</td><td> <label id="Payload_change"    ></label></td><td>%</td></tr>
 	</table>
@@ -306,9 +303,6 @@
 	var elTransfer_Orbit_stage_dry_mass = document.querySelector('#Transfer_Orbit_stage_dry_mass');
 
 	var elPayload_mass_calculated  = document.querySelector('#Payload_mass_calculated');
-	var elPayload_mass_calculated2 = document.querySelector('#Payload_mass_calculated2');
-	var elPayload_mass_calculated3 = document.querySelector('#Payload_mass_calculated3');
-	var elPayload_mass_calculated4 = document.querySelector('#Payload_mass_calculated4');
 	var elPayload_mass_calculated5 = document.querySelector('#Payload_mass_calculated5');
 	var elPayload_change = document.querySelector('#Payload_change');
 	
@@ -338,6 +332,14 @@
 							  
 	var s_fuel_count = 3;
 	var s_fuel_name = ["Lox/Kero", "Lox/Methan", "Lox/LH2"];
+	var s_fuel_invert = [1,1,1,1,1,1, 0,0,0,0];
+	var s_slider = [el1st_Dry_to_Wet_mass_Ratio_Range, el2nd_Dry_to_Wet_mass_Ratio_Range, elTransfer_Orbit_Stage_mass_Ratio_Range, elUnused_propellant_of_1st_Stage_Range,
+					elUnused_propellant_of_2nd_Stage_Range, elUnused_propellant_of_Transfer_Orbit_Stage_Range, elFirst_stage_isp_sea_level_or_at_the_start_altitude_Range,
+					elFirst_stage_isp_vac_Range, elSecond_stage_isp_vac_Range, elTransfer_Orbit_Stage_isp_Range];
+	var s_slider_edit = [el1st_Dry_to_Wet_mass_Ratio, el2nd_Dry_to_Wet_mass_Ratio, elTransfer_Orbit_Stage_mass_Ratio, elUnused_propellant_of_1st_Stage,
+					elUnused_propellant_of_2nd_Stage, elUnused_propellant_of_Transfer_Orbit_Stage, elFirst_stage_isp_sea_level_or_at_the_start_altitude,
+					elFirst_stage_isp_vac, elSecond_stage_isp_vac, elTransfer_Orbit_Stage_isp];
+
 	var s_fuel_data_min = [[6,  5,  10, 1, 1, 0.5, 260, 300, 320, 320],
 						   [7,  6,  10, 1, 1, 0.5, 270, 310, 330, 320],
 						   [10, 9,  10, 1, 1, 0.5, 350, 400, 450, 320]];
@@ -547,19 +549,11 @@
 		if (itteration == 1)
 		{
 			elPayload_mass_calculated.textContent = Payload_mass_calculated.toFixed(2);
-		} else if (itteration == 2)
-		{
-			elPayload_mass_calculated2.textContent = Payload_mass_calculated.toFixed(2);
-		} else if (itteration == 3)
-		{
-			elPayload_mass_calculated3.textContent = Payload_mass_calculated.toFixed(2);
-		} else if (itteration == 4)
-		{
-			elPayload_mass_calculated4.textContent = Payload_mass_calculated.toFixed(2);
 		} else if (itteration == 5)
 		{
+			var Assumed_payload_mass_base = parseFloat(elAssumed_payload_mass.value);
 			elPayload_mass_calculated5.textContent = Payload_mass_calculated.toFixed(2);
-			var Payload_change = Payload_mass_calculated/Assumed_payload_mass;
+			var Payload_change = Payload_mass_calculated/Assumed_payload_mass_base;
 			elPayload_change.textContent = (Payload_change * 100.0).toFixed(2);	
 		}
 		return Payload_mass_calculated;		
@@ -601,8 +595,11 @@
 			elOrbit_Inclination.value = s_orbit_data[elOrbit.selectedIndex][3];
 	}
 	
-	function RangeMinMax(range, input_field, val_min, val_max)
+	function RangeMinMax(range, input_field, fuel, index)
 	{
+		var val_min = s_fuel_data_min[fuel][index];
+		var val_max = s_fuel_data_max[fuel][index];
+
 		var input_value = parseFloat(input_field.value);
 		if (input_value < val_min)
 			input_field.value = val_min;
@@ -618,35 +615,163 @@
 			range.max = val_max * 100;
 		else
             range.setAttribute("max", val_max * 100);
-			
-		range.value = input_value * 100;
+		if (s_fuel_invert[index])
+			range.value = (val_min + val_max - input_value) * 100;
+		else
+			range.value = input_value * 100;
 	}
 	
 	
 	function updateFuel()
 	{
-		var idx = elFuel.selectedIndex;
-		RangeMinMax(el1st_Dry_to_Wet_mass_Ratio_Range, el1st_Dry_to_Wet_mass_Ratio,				s_fuel_data_min[idx][0], s_fuel_data_max[idx][0]);
-		RangeMinMax(el2nd_Dry_to_Wet_mass_Ratio_Range, el2nd_Dry_to_Wet_mass_Ratio, 			s_fuel_data_min[idx][1], s_fuel_data_max[idx][1]);
-		RangeMinMax(elTransfer_Orbit_Stage_mass_Ratio_Range, elTransfer_Orbit_Stage_mass_Ratio, s_fuel_data_min[idx][2], s_fuel_data_max[idx][2]);
+		var fuel = elFuel.selectedIndex;
+		for (var i = 0; i < 10; ++i)
+			RangeMinMax(s_slider[i], s_slider_edit[i], fuel, i);
+	}
+	
+	function updateSlider(index)
+	{
+		if (s_fuel_invert[index])
+		{
+			var vmin;
+			var vmax;
+			if ("min" in s_slider[index])
+				vmin = parseFloat(s_slider[index].min);
+			else
+				vmin = s_slider[index].getAttribute("min");
+			
+			if ("max" in s_slider[index])
+				vmax = parseFloat(s_slider[index].max);
+			else
+				vmax = s_slider[index].getAttribute("max");
+			s_slider_edit[index].value = (vmin + vmax - s_slider[index].value) / 100;
+		} else
+			s_slider_edit[index].value = s_slider[index].value / 100.0;
+		Calculate();
+	}
+	
+	function updateSliderEdit(index)
+	{
+		var val_min;
+		var val_max;
+		if (s_fuel_invert[index])
+		{
+			if ("min" in s_slider[index])
+				val_min = parseFloat(s_slider[index].min);
+			else
+				val_min = s_slider[index].getAttribute("min");
+			
+			if ("max" in s_slider[index])
+				val_max = parseFloat(s_slider[index].max);
+			else
+				val_max = s_slider[index].getAttribute("max");
+			s_slider[index].value = val_min + val_max - s_slider_edit[index].value * 100.0;
+		} else
+			s_slider[index].value = s_slider[index].s_slider_edit * 100.0;
+		Calculate();
 	}
 	
 	function update1st_Dry_to_Wet_mass_Ratio_Range()
 	{
-		el1st_Dry_to_Wet_mass_Ratio.value = el1st_Dry_to_Wet_mass_Ratio_Range.value / 100.0;
-		Calculate();
+		updateSlider(0);
 	}
 
-	function update1st_Dry_to_Wet_mass_Ratio()
+	function update2nd_Dry_to_Wet_mass_Ratio_Range()
 	{
-		if (el1st_Dry_to_Wet_mass_Ratio.value < s_fuel_data_min[elFuel.selectedIndex][0])
-			el1st_Dry_to_Wet_mass_Ratio.value = s_fuel_data_min[elFuel.selectedIndex][0];
-		if (el1st_Dry_to_Wet_mass_Ratio.value > s_fuel_data_max[elFuel.selectedIndex][0])
-			el1st_Dry_to_Wet_mass_Ratio.value = s_fuel_data_max[elFuel.selectedIndex][0];
-		el1st_Dry_to_Wet_mass_Ratio_Range.value = el1st_Dry_to_Wet_mass_Ratio.value * 100;
-		Calculate();
+		updateSlider(1);
 	}
 	
+	function updateTransfer_Orbit_Stage_mass_Ratio_Range()
+	{
+		updateSlider(2);
+	}
+	
+	function updateUnused_propellant_of_1st_Stage_Range()
+	{
+		updateSlider(3);
+	}
+	
+	function updateUnused_propellant_of_2nd_Stage_Range()
+	{
+		updateSlider(4);
+	}
+	
+	function updateUnused_propellant_of_Transfer_Orbit_Stage_Range()
+	{
+		updateSlider(5);
+	}
+	
+	function updateFirst_stage_isp_sea_level_or_at_the_start_altitude_Range()
+	{
+		updateSlider(6);
+	}
+	
+	function updateFirst_stage_isp_vac_Range()
+	{
+		updateSlider(7);
+	}
+	
+	function updateSecond_stage_isp_vac_Range()
+	{
+		updateSlider(8);
+	}
+	
+	function updateTransfer_Orbit_Stage_isp_Range()
+	{
+		updateSlider(9);
+	}
+
+	
+	function update1st_Dry_to_Wet_mass_Ratio()
+	{
+		updateSliderEdit(0);
+	}
+
+	function update2nd_Dry_to_Wet_mass_Ratio()
+	{
+		updateSliderEdit(1);
+	}
+	
+	function updateTransfer_Orbit_Stage_mass_Ratio()
+	{
+		updateSliderEdit(2);
+	}
+	
+	function updateUnused_propellant_of_1st_Stage()
+	{
+		updateSliderEdit(3);
+	}
+	
+	function updateUnused_propellant_of_2nd_Stage()
+	{
+		updateSliderEdit(4);
+	}
+	
+	function updateUnused_propellant_of_Transfer_Orbit_Stage()
+	{
+		updateSliderEdit(5);
+	}
+	
+	function updateFirst_stage_isp_sea_level_or_at_the_start_altitude()
+	{
+		updateSliderEdit(6);
+	}
+	
+	function updateFirst_stage_isp_vac()
+	{
+		updateSliderEdit(7);
+	}
+	
+	function updateSecond_stage_isp_vac()
+	{
+		updateSliderEdit(8);
+	}
+	
+	function updateTransfer_Orbit_Stage_isp()
+	{
+		updateSliderEdit(9);
+	}
+					
 	function updateOrbitAndCalc()
 	{
 		updateOrbit();
@@ -716,7 +841,7 @@
 	}
 	
 	function onPageLoad()
-	{	
+	{
 		for (var i = 0; i<s_start_point_count; i++)
 		{
 			var opt = document.createElement('option');
@@ -752,9 +877,29 @@
 			elFuel.appendChild(opt);
 		}
 		elFuel.addEventListener('change', updateFuel);
+
 		el1st_Dry_to_Wet_mass_Ratio_Range.addEventListener('change', update1st_Dry_to_Wet_mass_Ratio_Range);
-		el1st_Dry_to_Wet_mass_Ratio.addEventListener('change', update1st_Dry_to_Wet_mass_Ratio);
+		el2nd_Dry_to_Wet_mass_Ratio_Range.addEventListener('change', update2nd_Dry_to_Wet_mass_Ratio_Range);
+		elTransfer_Orbit_Stage_mass_Ratio_Range.addEventListener('change', updateTransfer_Orbit_Stage_mass_Ratio_Range);
+		elUnused_propellant_of_1st_Stage_Range.addEventListener('change', updateUnused_propellant_of_1st_Stage_Range);
+		elUnused_propellant_of_2nd_Stage_Range.addEventListener('change', updateUnused_propellant_of_2nd_Stage_Range);
+		elUnused_propellant_of_Transfer_Orbit_Stage_Range.addEventListener('change', updateUnused_propellant_of_Transfer_Orbit_Stage_Range);
+		elFirst_stage_isp_sea_level_or_at_the_start_altitude_Range.addEventListener('change', updateFirst_stage_isp_sea_level_or_at_the_start_altitude_Range);
+		elFirst_stage_isp_vac_Range.addEventListener('change', updateFirst_stage_isp_vac_Range);
+		elSecond_stage_isp_vac_Range.addEventListener('change', updateSecond_stage_isp_vac_Range);
+		elTransfer_Orbit_Stage_isp_Range.addEventListener('change', updateTransfer_Orbit_Stage_isp_Range);
 		
+		el1st_Dry_to_Wet_mass_Ratio.addEventListener('change', update1st_Dry_to_Wet_mass_Ratio);
+		el2nd_Dry_to_Wet_mass_Ratio.addEventListener('change', update2nd_Dry_to_Wet_mass_Ratio);
+		elTransfer_Orbit_Stage_mass_Ratio.addEventListener('change', updateTransfer_Orbit_Stage_mass_Ratio);
+		elUnused_propellant_of_1st_Stage.addEventListener('change', updateUnused_propellant_of_1st_Stage);
+		elUnused_propellant_of_2nd_Stage.addEventListener('change', updateUnused_propellant_of_2nd_Stage);
+		elUnused_propellant_of_Transfer_Orbit_Stage.addEventListener('change', updateUnused_propellant_of_Transfer_Orbit_Stage);
+		elFirst_stage_isp_sea_level_or_at_the_start_altitude.addEventListener('change', updateFirst_stage_isp_sea_level_or_at_the_start_altitude);
+		elFirst_stage_isp_vac.addEventListener('change', updateFirst_stage_isp_vac);
+		elSecond_stage_isp_vac.addEventListener('change', updateSecond_stage_isp_vac);
+		elTransfer_Orbit_Stage_isp.addEventListener('change', updateTransfer_Orbit_Stage_isp);
+					
 		elStarting_Point_Altitude.addEventListener('change', Calculate);
 		elAdditional_Speed.addEventListener('change', Calculate);
 		elOrbit_Perigee.addEventListener('change', Calculate);
