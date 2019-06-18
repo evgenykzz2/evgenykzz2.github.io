@@ -601,10 +601,10 @@
 		var val_max = s_fuel_data_max[fuel][index];
 
 		var input_value = parseFloat(input_field.value);
-		if (input_value < val_min)
-			input_field.value = val_min;
-		if (input_value > val_max)
-			input_field.value = val_max;
+		//if (input_value < val_min)
+		//	input_field.value = val_min;
+		//if (input_value > val_max)
+		//	input_field.value = val_max;
 
 		if ("min" in range)
 			range.min = val_min * 100;
