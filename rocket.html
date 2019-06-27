@@ -137,7 +137,8 @@
 	<tr><td>Launch point speed</td><td> <label id="Launch_point_speed"    ></label></td><td>m/s</td></tr>
 	<tr><td>Starting Point Altitude orbital velosity</td><td> <label id="Starting_Point_Altitude_orbital_velosity"    ></label></td><td>m/s</td></tr>
 	<tr><td>Absolute orbital velocity</td><td> <label id="Absolute_orbital_velocity"    ></label></td><td>m/s</td></tr>
-	<tr><td>Orbital velocity</td><td> <label id="Orbital_velocity"    ></label></td><td>m/s</td></tr>
+	<tr><td>Orbital period</td><td> <label id="Orbital_period"    ></label></td><td>min</td></tr>
+	<tr><td>Relative orbital velocity</td><td> <label id="Orbital_velocity"    ></label></td><td>m/s</td></tr>
 	<tr><td>Orbital velocity increment due to the Earth rotation</td><td> <label id="Orbital_velocity_increment_due_to_the_Earth_rotation"    ></label></td><td>m/s</td></tr>
 	<tr><td>Specific velocity for circular orbit</td><td> <label id="Specific_velocity_for_circular_orbit"    ></label></td><td>m/s</td></tr>
 	<tr><td>Specific velocity for target orbit</td><td> <label id="Specific_velocity_for_target_orbit"    ></label></td><td>m/s</td></tr>
@@ -155,7 +156,8 @@
 	<table border="1">
 	<tr><td>Orbit Perigee</td><td> <input id="Orbit_Perigee"                    value=200>  </td><td>Km</td></tr>
 	<tr><td>Orbit Apogee</td><td> <input id="Orbit_Apogee"                      value=0>    </td><td>Km</td></tr>
-	<tr><td>Orbit Inclination</td><td> <input id="Orbit_Inclination"            value=28.5> </td><td>deg</td></tr>	
+	<tr><td>Orbit Inclination</td><td> <input id="Orbit_Inclination"            value=28.5> </td><td>deg</td></tr>
+	<tr><td>Extra speed for flight to the planets</td><td> <input id="Extra_speed_for_flight_to_the_planets"            value=0.0> </td><td>m/s</td></tr>
 	</table>	
 </td>
 </tr>
@@ -230,6 +232,7 @@
 	var elLaunch_point_speed = document.querySelector('#Launch_point_speed');
 	var elStarting_Point_Altitude_orbital_velosity = document.querySelector('#Starting_Point_Altitude_orbital_velosity');
 	var elAbsolute_orbital_velocity = document.querySelector('#Absolute_orbital_velocity');
+	var elOrbital_period = document.querySelector('#Orbital_period');
 	var elOrbital_velocity = document.querySelector('#Orbital_velocity');
 	var elOrbital_velocity_increment_due_to_the_Earth_rotation = document.querySelector('#Orbital_velocity_increment_due_to_the_Earth_rotation');
 	var elSpecific_velocity_for_circular_orbit = document.querySelector('#Specific_velocity_for_circular_orbit');
@@ -271,6 +274,7 @@
 	var elSecond_stage_isp_vac = document.querySelector('#Second_stage_isp_vac');
 	var elTransfer_Orbit_Stage_isp_Range = document.querySelector('#Transfer_Orbit_Stage_isp_Range');
 	var elTransfer_Orbit_Stage_isp = document.querySelector('#Transfer_Orbit_Stage_isp');
+	var elExtra_speed_for_flight_to_the_planets = document.querySelector('#Extra_speed_for_flight_to_the_planets');
 
 	var elFuel = document.querySelector('#Fuel');
 	
@@ -383,19 +387,23 @@
 		var Orbit_Apogee = parseFloat(elOrbit_Apogee.value);
 		var Spaceport_latitude = parseFloat(elSpaceport_latitude.value);
 		var Orbit_Inclination = parseFloat(elOrbit_Inclination.value);
-		
+		var Orbital_period = parseFloat(elOrbital_period.value);
+		var Extra_speed_for_flight_to_the_planets = parseFloat(elExtra_speed_for_flight_to_the_planets.value);
 		var Intermediate_angle = Orbit_Inclination > Spaceport_latitude ?
 				(Rad2Deg(Math.asin(Math.cos(Deg2Rad(Orbit_Inclination))/Math.cos(Deg2Rad(Spaceport_latitude))))) :
 				(90.0-Rad2Deg(Math.asin(1.0-(Math.cos(Deg2Rad(Orbit_Inclination))/Math.cos(Deg2Rad(Spaceport_latitude))))));
 		elIntermediate_angle.textContent = Intermediate_angle.toFixed(2);
 		
-		var Launch_point_speed = 460.0*Math.cos(Deg2Rad(Spaceport_latitude));
+		var earth_radius = 6371.0;
+		var gravity_const = 398600500000.0;
+		
+		var Launch_point_speed = 465.0*Math.cos(Deg2Rad(Spaceport_latitude));
 		elLaunch_point_speed.textContent = Launch_point_speed.toFixed(2);
 		
-		var Starting_Point_Altitude_orbital_velosity = Math.sqrt(398730000000.0/(6378.0));
+		var Starting_Point_Altitude_orbital_velosity = Math.sqrt(gravity_const/(earth_radius));
 		elStarting_Point_Altitude_orbital_velosity.textContent = Starting_Point_Altitude_orbital_velosity.toFixed(2);
 		
-		var Absolute_orbital_velocity = Math.sqrt(398730000000.0/(6378.0+Orbit_Perigee));
+		var Absolute_orbital_velocity = Math.sqrt(gravity_const/(earth_radius+Orbit_Perigee));
 		elAbsolute_orbital_velocity.textContent = Absolute_orbital_velocity.toFixed(2);
 		
 		var Orbital_velocity = Math.sqrt(Launch_point_speed*Launch_point_speed + Absolute_orbital_velocity*Absolute_orbital_velocity
@@ -409,15 +417,15 @@
 		elLaunch_azimuth.textContent = Launch_azimuth.toFixed(2);
 		
 		var Specific_velocity_for_circular_orbit = Starting_Point_Altitude_orbital_velosity
-				+Starting_Point_Altitude_orbital_velosity*(7906.0/Math.sqrt(0.5*(Starting_Point_Altitude_orbital_velosity*Starting_Point_Altitude_orbital_velosity+Absolute_orbital_velocity*Absolute_orbital_velocity))-1.0)
+				+Starting_Point_Altitude_orbital_velosity*(Starting_Point_Altitude_orbital_velosity/Math.sqrt(0.5*(Starting_Point_Altitude_orbital_velosity*Starting_Point_Altitude_orbital_velosity+Absolute_orbital_velocity*Absolute_orbital_velocity))-1.0)
 				+Absolute_orbital_velocity*(1.0-Absolute_orbital_velocity/Math.sqrt(0.5*(Starting_Point_Altitude_orbital_velosity*Starting_Point_Altitude_orbital_velosity+Absolute_orbital_velocity*Absolute_orbital_velocity)))
 				-Orbital_velocity_increment_due_to_the_Earth_rotation;
 		elSpecific_velocity_for_circular_orbit.textContent = Specific_velocity_for_circular_orbit.toFixed(2);
 		
 		var Specific_velocity_for_target_orbit = (Orbit_Apogee == 0) ?
-			Specific_velocity_for_circular_orbit : 
-			(Specific_velocity_for_circular_orbit
-			  +Absolute_orbital_velocity*(Absolute_orbital_velocity/Math.sqrt(0.5*(Absolute_orbital_velocity*Absolute_orbital_velocity+398730000000.0/(6378.0+Orbit_Apogee)))-1.0));
+			Specific_velocity_for_circular_orbit + Extra_speed_for_flight_to_the_planets : 
+			(Specific_velocity_for_circular_orbit + Extra_speed_for_flight_to_the_planets
+			  +Absolute_orbital_velocity*(Absolute_orbital_velocity/Math.sqrt(0.5*(Absolute_orbital_velocity*Absolute_orbital_velocity+gravity_const/(earth_radius+Orbit_Apogee)))-1.0));
 		elSpecific_velocity_for_target_orbit.textContent = Specific_velocity_for_target_orbit.toFixed(2);
 		
 		var Specific_velocity_for_LEO = 8026.0-Orbital_velocity_increment_due_to_the_Earth_rotation-Additional_Speed;
