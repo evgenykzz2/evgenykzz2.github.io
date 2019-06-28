@@ -286,7 +286,7 @@
 	var elAssumed_losses = document.querySelector('#Assumed_losses');
 	var elSpecific_velocity_with_losses = document.querySelector('#Specific_velocity_with_losses');
 	
-	//=== Outout ===
+	//=== Output ===
 	var elFirst_stage_average_trajectory_isp = document.querySelector('#First_stage_average_trajectory_isp');
 	var elFirst_stage_specific_velocity = document.querySelector('#First_stage_specific_velocity');
 	var elFirst_stage_final_mass = document.querySelector('#First_stage_final_mass');
@@ -387,7 +387,6 @@
 		var Orbit_Apogee = parseFloat(elOrbit_Apogee.value);
 		var Spaceport_latitude = parseFloat(elSpaceport_latitude.value);
 		var Orbit_Inclination = parseFloat(elOrbit_Inclination.value);
-		var Orbital_period = parseFloat(elOrbital_period.value);
 		var Extra_speed_for_flight_to_the_planets = parseFloat(elExtra_speed_for_flight_to_the_planets.value);
 		var Intermediate_angle = Orbit_Inclination > Spaceport_latitude ?
 				(Rad2Deg(Math.asin(Math.cos(Deg2Rad(Orbit_Inclination))/Math.cos(Deg2Rad(Spaceport_latitude))))) :
@@ -406,8 +405,16 @@
 		var Absolute_orbital_velocity = Math.sqrt(gravity_const/(earth_radius+Orbit_Perigee));
 		elAbsolute_orbital_velocity.textContent = Absolute_orbital_velocity.toFixed(2);
 		
-		var Orbital_velocity = Math.sqrt(Launch_point_speed*Launch_point_speed + Absolute_orbital_velocity*Absolute_orbital_velocity
+		var Orbital_period = (Orbit_Apogee == 0) ?
+			2.0*Math.PI/Math.sqrt(398600.5)*Math.pow(6371+Orbit_Perigee, 3.0/2.0)/60.0,
+			2.0*Math.PI/Math.sqrt(398600.5)*Math.pow(6371+0.5*(Orbit_Perigee+Orbit_Apogee), 3.0/2.0)/60.0;
+		elOrbital_period.textContent = Orbital_period.toFixed(2);
+		
+		var tmp_velocity = Math.sqrt(Launch_point_speed*Launch_point_speed + Absolute_orbital_velocity*Absolute_orbital_velocity
 										-2.0*Launch_point_speed*Absolute_orbital_velocity*Math.sin(Deg2Rad(Intermediate_angle)));
+
+		var Orbital_velocity = (465.0*Math.cos(Deg2Rad(Orbit_Inclination)) < Absolute_orbital_velocity) ?
+								tmp_velocity : -tmp_velocity;
 		elOrbital_velocity.textContent = Orbital_velocity.toFixed(2);
 		
 		var Orbital_velocity_increment_due_to_the_Earth_rotation = Absolute_orbital_velocity - Orbital_velocity;
