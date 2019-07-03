@@ -192,6 +192,8 @@
 	<tr><td>Second stage total (Start) mass</td><td> <label id="Second_stage_total_Start_mass"    ></label></td><td>Kg</td></tr>
 	<tr><td>Second stage total mass before fairing jettison</td><td> <label id="Second_stage_total_mass_before_fairing_jettison"    ></label></td><td>Kg</td></tr>
 	<tr><td>Second stage total mass before battery jettison</td><td> <label id="Second_stage_total_mass_before_battery_jettison"    ></label></td><td>Kg</td></tr>
+	<tr><td>Second stage specific velocity before battery jettison</td><td> <label id="Second_stage_specific_velocity_before_battery_jettison"    ></label></td><td>Kg</td></tr>
+	
 	<tr><td>Second stage final mass</td><td> <label id="Second_stage_final_mass"    ></label></td><td>Kg</td></tr>
 	<tr><td>Second stage propellant mass</td><td> <label id="Second_stage_propellant_mass"    ></label></td><td>Kg</td></tr>
 	<tr><td>Second stage dry mass</td><td> <label id="Second_stage_dry_mass"    ></label></td><td>Kg</td></tr>
@@ -301,6 +303,8 @@
 	var elSecond_stage_total_Start_mass = document.querySelector('#Second_stage_total_Start_mass');
 	var elSecond_stage_total_mass_before_fairing_jettison = document.querySelector('#Second_stage_total_mass_before_fairing_jettison');
 	var elSecond_stage_total_mass_before_battery_jettison = document.querySelector('#Second_stage_total_mass_before_battery_jettison');
+	var elSecond_stage_specific_velocity_before_battery_jettison = document.querySelector('#Second_stage_specific_velocity_before_battery_jettison');
+	
 	var elSecond_stage_final_mass = document.querySelector('#Second_stage_final_mass');
 	var elSecond_stage_propellant_mass = document.querySelector('#Second_stage_propellant_mass');
 	var elSecond_stage_dry_mass = document.querySelector('#Second_stage_dry_mass');
@@ -526,33 +530,39 @@
 		var Second_stage_specific_velocity;
 		var Second_stage_dry_mass;
 		var Second_stage_propellant_mass;
+		var Second_stage_total_mass_before_battery_jettison;
 		if (v3rd_Stage_mass_Ratio == 0)
 		{
-			Second_stage_specific_velocity = (Specific_velocity_with_losses-First_stage_specific_velocity);
-			Second_stage_final_mass = 1.0/(Math.exp((Second_stage_specific_velocity-(Fairing_jettison_specific_velocity-First_stage_specific_velocity))/
-				(Second_stage_isp_vac*9.80665))/(Second_stage_total_mass_before_fairing_jettison-Fairing_mass));
-			Second_stage_dry_mass = v3rd_Stage_mass_Ratio == 0 ?
-				(Second_stage_total_Start_mass-Fairing_mass-Assumed_payload_mass)*v2nd_Dry_to_Wet_mass_Ratio/100 :
-				(Second_stage_total_Start_mass-Second_stage_final_mass)*(1+Unused_propellant_of_2nd_Stage/100)/
-					(1.0/(v2nd_Dry_to_Wet_mass_Ratio/100)-1);
-			Second_stage_propellant_mass = Second_stage_dry_mass*(100.0/v2nd_Dry_to_Wet_mass_Ratio)-Second_stage_dry_mass;
-		} else
-		{
-			Second_stage_final_mass = Second_stage_total_Start_mass-((Lift_off_Mass*(v2nd_Stage_mass_Ratio-v3rd_Stage_mass_Ratio)/100)*
-					(1.0-v2nd_Dry_to_Wet_mass_Ratio/100))/100*(100-Unused_propellant_of_2nd_Stage);
+			Second_stage_specific_velocity = Specific_velocity_with_losses-First_stage_specific_velocity;
+
+			Second_stage_dry_mass = (Second_stage_total_Start_mass-Fairing_mass-Assumed_payload_mass)*_2nd_Dry_to_Wet_mass_Ratio/100;
+			Second_stage_propellant_mass = Second_stage_dry_mass*(100/_2nd_Dry_to_Wet_mass_Ratio)-Second_stage_dry_mass;
 			
-			Second_stage_dry_mass = v3rd_Stage_mass_Ratio == 0 ?
-				(Second_stage_total_Start_mass-Fairing_mass-Assumed_payload_mass)*v2nd_Dry_to_Wet_mass_Ratio/100 :
-				(Second_stage_total_Start_mass-Second_stage_final_mass)*(1+Unused_propellant_of_2nd_Stage/100)/
-					(1.0/(v2nd_Dry_to_Wet_mass_Ratio/100)-1);
-			Second_stage_propellant_mass = Second_stage_dry_mass*(100.0/v2nd_Dry_to_Wet_mass_Ratio)-Second_stage_dry_mass;
 			Second_stage_total_mass_before_battery_jettison = Second_stage_dry_mass+0.67*Second_stage_propellant_mass;
 			
-			Second_stage_specific_velocity =
-				 9.80665*Second_stage_isp_vac*Math.log( Second_stage_total_Start_mass/Second_stage_total_mass_before_fairing_jettison)
-				+9.80665*Second_stage_isp_vac*Math.log((Second_stage_total_mass_before_fairing_jettison-Fairing_mass)/Second_stage_total_mass_before_battery_jettison)
-				+9.80665*Second_stage_isp_vac*Math.log((Second_stage_total_mass_before_battery_jettison-Jettisoned_battery_mass)/Second_stage_final_mass);
+			Second_stage_specific_velocity_before_battery_jettison = 9.80665*Second_stage_isp_vac*
+				Math.log((Second_stage_total_mass_before_fairing_jettison-Fairing_mass)/Second_stage_total_mass_before_battery_jettison);
+
+			Second_stage_final_mass = 1.0/(Math.exp(
+				(Second_stage_specific_velocity-(Fairing_jettison_specific_velocity-First_stage_specific_velocity)
+				-Second_stage_specific_velocity_before_battery_jettison)
+				/(Second_stage_isp_vac*9.80665))/(Second_stage_total_mass_before_battery_jettison
+					-Jettisoned_battery_mass));
+		} else
+		{
+			Second_stage_specific_velocity = 9.80665*D53*LN(D64/D65)+9.80665*D53*LN((D65-D37)/D66)+9.80665*D53*LN((D66-D40)/D68);
+
+			Second_stage_dry_mass = (D64-D68)*(1+D49/100)/(1/(D46/100)-1);
+			Second_stage_propellant_mass = Second_stage_dry_mass*(100/_2nd_Dry_to_Wet_mass_Ratio)-Second_stage_dry_mass;
+			
+			Second_stage_total_mass_before_battery_jettison = Second_stage_dry_mass+0.67*Second_stage_propellant_mass;
+			
+			Second_stage_specific_velocity_before_battery_jettison = 9.80665*Second_stage_isp_vac*
+				Math.log((Second_stage_total_mass_before_fairing_jettison-Fairing_mass)/Second_stage_total_mass_before_battery_jettison);;
+
+			Second_stage_final_mass = D64-((D36*(D43-D44)/100)*(1-D46/100))/100*(100-D49)-D40;
 		}
+
 		elSecond_stage_final_mass.textContent = Second_stage_final_mass.toFixed(2);
 		elSecond_stage_specific_velocity.textContent = Second_stage_specific_velocity.toFixed(2);
 		
