@@ -70,8 +70,7 @@
 	<tr><td>Fairing mass</td><td> <input id="Fairing_mass">                               </td><td>Kg</td></tr>
 	<tr><td>Fairing jettison velocity</td><td> <input id="Fairing_jettison_velocity">     </td><td>m/s</td></tr>
 	<tr><td>Fairing jettison specific velocity</td><td> <label id="Fairing_jettison_specific_velocity"    ></label></td><td>m/s</td></tr>
-	<tr><td>Jettisoned battery mass</td><td> <label id="Jettisoned_battery_mass"    ></label></td><td>kg</td></tr>
-	
+	<tr><td>Jettisoned battery mass</td><td> <input id="Jettisoned_battery_mass" value="0">                   </td><td>Kg</td></tr>
 
 	<tr><td>Assumed payload mass</td><td> <input id="Assumed_payload_mass" value="750">                   </td><td>Kg</td></tr>
 	
@@ -361,21 +360,21 @@
 						   [14, 14, 30, 3, 3,   5, 370, 430, 470, 370]];
 	
 	var s_rocket_count = 15;
-	var s_rocket_data = [["Rocket 1",                      1.19,  33400,  150,  3500, 771,   26.94, 0,    8,     10,     20,    1.5, 1.5, 1,   290.5, 327,   365, 320, "Lox/Kero",   "Canaveral",       "LEO"],
-						 ["Rocket 2",                      1.19,  33400,  100,  3500, 458,   26.94, 5,    9.92,  12.38,  20,    2,   2,   1,   282.0, 321,   352, 320, "Lox/Kero",   "Canaveral",       "SSO"],
-						 ["Zenit-2",                       1.605, 459000, 1800, 3500, 13470, 23.20, 0,    7.93,  9.15,   20,    1.2, 1.2, 0.8, 309.0, 336,   349, 352, "Lox/Kero",   "Baikonur",        "LEO"],
-						 ["Zenit-3SL",                     1.57,  468240, 1850, 3500, 3170,  24.32, 4.88, 7.78,  9.15,   14.42, 1.2, 1.2, 0.8, 309.5, 337.2, 349, 361, "Lox/Kero",   "Sea Launch",      "GEO"],
-						 ["Delta-IV Medium",               1.21,  264840, 2800, 4500, 11470, 14.51, 0,    11.70, 11.79,  20,    2,   2,   0.8, 360.0, 412,   462, 300, "Lox/LH2",    "Canaveral",       "LEO"],
-						 ["Falcon9 V1.0",                  1.22,  318000, 1000, 3500, 9000,  19.18, 0.00, 6.74,  5.96,   20.00, 1.5, 1.5, 1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO"],
-						 ["Falcon 1e",                     1.19,  47750,  145,  3500, 650,   11.90, 0.00, 6.13,  11.07,  20.00, 2,   2,   1,   263.0, 304,   317, 300, "Lox/Kero",   "Canaveral",       "LEO"],
-						 ["Electron",                      1.32,  12550,  44,   3500, 240,   21.39, 0.00, 9.31,  10.42,  20.00, 2,   2,   1,   256.0, 303,   333, 240, "Lox/Kero",   "Rocket Lab LC-1", "LEO"],
-						 ["Electron Curie",                1.32,  12550,  44,   3500, 150,   21.39, 3.00, 9.31,  10.42,  15.00, 1.5, 1.5, 1,   256.0, 303,   333, 240, "Lox/Kero",   "Rocket Lab LC-1", "SSO"],
-						 ["Launcher One",                  1.44,  23300,  100,  3500, 300,   12.66, 0.00, 8.00,   9.00,  20.00, 2,   2,   1,   263.0, 304,   317, 300, "Lox/Kero",   "Canaveral",       "SSO"],
-						 ["Terran 1 (Relativity)",         1.2,   52730,  400,  3500, 1250,  24.46, 0.00, 8.00,   9.00,  20.00, 2,   2,   1,   286.0, 326,   360, 300, "Lox/Methan", "Canaveral",       "LEO"],
-						 ["XS-1 tactical missile (Astra)", 1.6,   7560,   30,   3500, 100,   19.44, 0.00, 9.50,  10.00,  20.00, 2,   2,   1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO"],
-						 ["Firefly Alpha",                 1.25,  54000,  330,  3500, 1000,  25.00, 0.00, 7.50,  6.74,   20.00, 2,   2,   1,   265.0, 295,   322, 300, "Lox/Kero",   "Canaveral",       "LEO"],
-						 ["abl RS1 Old",                   1.2,   26459,  300,  3500, 900,   15.75, 0.00, 5.00,  4.00,   20.00, 2,   2,   1,   262.0, 308,   345, 300, "Lox/Kero",   "Camden",          "LEO"],
-						 ["abl RS1",                       1.2,   47627,  400,  3500, 1200,  18.06, 0.00, 5.00,  5.00,   20.00, 2,   2,   1,   265.0, 295.6, 322, 300, "Lox/Kero",   "Camden",          "LEO"]
+	var s_rocket_data = [["Rocket 1",                      1.19,  33400,  150,  3500, 0,  771,   26.94, 0,    8,     10,     20,    1.5, 1.5, 1,   290.5, 327,   365, 320, "Lox/Kero",   "Canaveral",       "LEO"],
+						 ["Rocket 2",                      1.19,  33400,  100,  3500, 0,  458,   26.94, 5,    9.92,  12.38,  20,    2,   2,   1,   282.0, 321,   352, 320, "Lox/Kero",   "Canaveral",       "SSO"],
+						 ["Zenit-2",                       1.605, 459000, 1800, 3500, 0,  13470, 23.20, 0,    7.93,  9.15,   20,    1.2, 1.2, 0.8, 309.0, 336,   349, 352, "Lox/Kero",   "Baikonur",        "LEO"],
+						 ["Zenit-3SL",                     1.57,  468240, 1850, 3500, 0,  3170,  24.32, 4.88, 7.78,  9.15,   14.42, 1.2, 1.2, 0.8, 309.5, 337.2, 349, 361, "Lox/Kero",   "Sea Launch",      "GEO"],
+						 ["Delta-IV Medium",               1.21,  264840, 2800, 4500, 0,  11470, 14.51, 0,    11.70, 11.79,  20,    2,   2,   0.8, 360.0, 412,   462, 300, "Lox/LH2",    "Canaveral",       "LEO"],
+						 ["Falcon9 V1.0",                  1.22,  318000, 1000, 3500, 0,  9000,  19.18, 0.00, 6.74,  5.96,   20.00, 1.5, 1.5, 1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO"],
+						 ["Falcon 1e",                     1.19,  47750,  145,  3500, 0,  650,   11.90, 0.00, 6.13,  11.07,  20.00, 2,   2,   1,   263.0, 304,   317, 300, "Lox/Kero",   "Canaveral",       "LEO"],
+						 ["Electron",                      1.32,  12550,  44,   3500, 50, 240,   21.39, 0.00, 9.31,  10.42,  20.00, 2,   2,   1,   256.0, 303,   333, 240, "Lox/Kero",   "Rocket Lab LC-1", "LEO"],
+						 ["Electron Curie",                1.32,  12550,  44,   3500, 50, 150,   21.39, 3.00, 9.31,  10.42,  15.00, 1.5, 1.5, 1,   256.0, 303,   333, 240, "Lox/Kero",   "Rocket Lab LC-1", "SSO"],
+						 ["Launcher One",                  1.44,  23300,  100,  3500, 0,  300,   12.66, 0.00, 8.00,   9.00,  20.00, 2,   2,   1,   263.0, 304,   317, 300, "Lox/Kero",   "Canaveral",       "SSO"],
+						 ["Terran 1 (Relativity)",         1.2,   52730,  400,  3500, 0,  1250,  24.46, 0.00, 8.00,   9.00,  20.00, 2,   2,   1,   286.0, 326,   360, 300, "Lox/Methan", "Canaveral",       "LEO"],
+						 ["XS-1 tactical missile (Astra)", 1.6,   7560,   30,   3500, 0,  100,   19.44, 0.00, 9.50,  10.00,  20.00, 2,   2,   1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO"],
+						 ["Firefly Alpha",                 1.25,  54000,  330,  3500, 0,  1000,  25.00, 0.00, 7.50,  6.74,   20.00, 2,   2,   1,   265.0, 295,   322, 300, "Lox/Kero",   "Canaveral",       "LEO"],
+						 ["abl RS1 Old",                   1.2,   26459,  300,  3500, 0,  900,   15.75, 0.00, 5.00,  4.00,   20.00, 2,   2,   1,   262.0, 308,   345, 300, "Lox/Kero",   "Camden",          "LEO"],
+						 ["abl RS1",                       1.2,   47627,  400,  3500, 0,  1200,  18.06, 0.00, 5.00,  5.00,   20.00, 2,   2,   1,   265.0, 295.6, 322, 300, "Lox/Kero",   "Camden",          "LEO"]
 						 ];
 	
 	function Rad2Deg(radians)
@@ -415,7 +414,7 @@
 		elAbsolute_orbital_velocity.textContent = Absolute_orbital_velocity.toFixed(2);
 		
 		var Orbital_period = (Orbit_Apogee == 0) ?
-			2.0*Math.PI/Math.sqrt(398600.5)*Math.pow(6371+Orbit_Perigee, 3.0/2.0)/60.0,
+			2.0*Math.PI/Math.sqrt(398600.5)*Math.pow(6371+Orbit_Perigee, 3.0/2.0)/60.0 :
 			2.0*Math.PI/Math.sqrt(398600.5)*Math.pow(6371+0.5*(Orbit_Perigee+Orbit_Apogee), 3.0/2.0)/60.0;
 		elOrbital_period.textContent = Orbital_period.toFixed(2);
 		
@@ -444,7 +443,7 @@
 			  +Absolute_orbital_velocity*(Absolute_orbital_velocity/Math.sqrt(0.5*(Absolute_orbital_velocity*Absolute_orbital_velocity+gravity_const/(earth_radius+Orbit_Apogee)))-1.0));
 		elSpecific_velocity_for_target_orbit.textContent = Specific_velocity_for_target_orbit.toFixed(2);
 		
-		var Specific_velocity_for_LEO = 8026.0-Orbital_velocity_increment_due_to_the_Earth_rotation-Additional_Speed;
+		var Specific_velocity_for_LEO = 8023.0-Orbital_velocity_increment_due_to_the_Earth_rotation-Additional_Speed;
 		elSpecific_velocity_for_LEO.textContent = Specific_velocity_for_LEO.toFixed(2);
 		
 		var Fairing_jettison_velocity = parseFloat(elFairing_jettison_velocity.value);
@@ -535,8 +534,8 @@
 		{
 			Second_stage_specific_velocity = Specific_velocity_with_losses-First_stage_specific_velocity;
 
-			Second_stage_dry_mass = (Second_stage_total_Start_mass-Fairing_mass-Assumed_payload_mass)*_2nd_Dry_to_Wet_mass_Ratio/100;
-			Second_stage_propellant_mass = Second_stage_dry_mass*(100/_2nd_Dry_to_Wet_mass_Ratio)-Second_stage_dry_mass;
+			Second_stage_dry_mass = (Second_stage_total_Start_mass-Fairing_mass-Assumed_payload_mass)*v2nd_Dry_to_Wet_mass_Ratio/100;
+			Second_stage_propellant_mass = Second_stage_dry_mass*(100/v2nd_Dry_to_Wet_mass_Ratio)-Second_stage_dry_mass;
 			
 			Second_stage_total_mass_before_battery_jettison = Second_stage_dry_mass+0.67*Second_stage_propellant_mass;
 			
@@ -550,18 +549,24 @@
 					-Jettisoned_battery_mass));
 		} else
 		{
-			Second_stage_specific_velocity = 9.80665*D53*LN(D64/D65)+9.80665*D53*LN((D65-D37)/D66)+9.80665*D53*LN((D66-D40)/D68);
-
-			Second_stage_dry_mass = (D64-D68)*(1+D49/100)/(1/(D46/100)-1);
-			Second_stage_propellant_mass = Second_stage_dry_mass*(100/_2nd_Dry_to_Wet_mass_Ratio)-Second_stage_dry_mass;
+			Second_stage_final_mass = Second_stage_total_Start_mass 
+					-((Lift_off_Mass*(_2nd_Stage_mass_Ratio-_3rd_Stage_mass_Ratio)/100)*(1-v2nd_Dry_to_Wet_mass_Ratio/100))/100*
+					 (100-Unused_propellant_of_2nd_Stage)-Jettisoned_battery_mass;
 			
+			Second_stage_dry_mass = (Second_stage_total_Start_mass-Second_stage_final_mass)*(1+Unused_propellant_of_2nd_Stage/100)/(1/(v2nd_Dry_to_Wet_mass_Ratio/100)-1);
+			Second_stage_propellant_mass = Second_stage_dry_mass*(100/v2nd_Dry_to_Wet_mass_Ratio)-Second_stage_dry_mass;
+
 			Second_stage_total_mass_before_battery_jettison = Second_stage_dry_mass+0.67*Second_stage_propellant_mass;
 			
+			Second_stage_specific_velocity = 9.80665*Second_stage_isp_vac*Math.log(Second_stage_total_Start_mass/Second_stage_total_mass_before_fairing_jettison)
+				+9.80665*Second_stage_isp_vac*Math.log((Second_stage_total_mass_before_fairing_jettison-Fairing_mass)/Second_stage_total_mass_before_battery_jettison)
+				+9.80665*Second_stage_isp_vac*Math.log((Second_stage_total_mass_before_battery_jettison-Jettisoned_battery_mass)/Second_stage_final_mass);
+
 			Second_stage_specific_velocity_before_battery_jettison = 9.80665*Second_stage_isp_vac*
 				Math.log((Second_stage_total_mass_before_fairing_jettison-Fairing_mass)/Second_stage_total_mass_before_battery_jettison);;
-
-			Second_stage_final_mass = D64-((D36*(D43-D44)/100)*(1-D46/100))/100*(100-D49)-D40;
 		}
+		elSecond_stage_total_mass_before_battery_jettison.textContent = Second_stage_total_mass_before_battery_jettison.toFixed(2);
+		elSecond_stage_specific_velocity_before_battery_jettison.textContent = Second_stage_specific_velocity_before_battery_jettison.toFixed(2);
 
 		elSecond_stage_final_mass.textContent = Second_stage_final_mass.toFixed(2);
 		elSecond_stage_specific_velocity.textContent = Second_stage_specific_velocity.toFixed(2);
@@ -575,10 +580,10 @@
 			(Specific_velocity_with_losses-First_stage_specific_velocity-Second_stage_specific_velocity);
 		elTransfer_Orbit_stage_specific_velocity_required.textContent = Transfer_Orbit_stage_specific_velocity_required.toFixed(2);
 		
-		var Transfer_Orbit_stage_total_Start_mass = Second_stage_final_mass-Second_stage_dry_mass-Second_stage_propellant_mass/100*Unused_propellant_of_2nd_Stage;
+		var Transfer_Orbit_stage_total_Start_mass = Second_stage_final_mass+Jettisoned_battery_mass-Second_stage_dry_mass-Second_stage_propellant_mass/100*Unused_propellant_of_2nd_Stage;
 		elTransfer_Orbit_stage_total_Start_mass.textContent = Transfer_Orbit_stage_total_Start_mass.toFixed(2);
 		
-		var Transfer_Orbit_stage_final_mass = 1.0/(Math.exp(Transfer_Orbit_stage_specific_velocity_required/(Transfer_Orbit_Stage_isp*9.80665))/Transfer_Orbit_stage_total_Start_mass) ;
+		var Transfer_Orbit_stage_final_mass = 1.0/(Math.exp(Transfer_Orbit_stage_specific_velocity_required/(Transfer_Orbit_Stage_isp*9.80665))/Transfer_Orbit_stage_total_Start_mass);
 		elTransfer_Orbit_stage_final_mass.textContent = Transfer_Orbit_stage_final_mass.toFixed(2);
 
 		var Transfer_Orbit_stage_dry_mass = v3rd_Stage_mass_Ratio == 0 ? 0 :
@@ -594,8 +599,8 @@
 		if (itteration == 1)
 		{
 			elPayload_mass_calculated.textContent = Payload_mass_calculated.toFixed(2);
-		} else if (itteration == 5)
-		{
+		//} else if (itteration == 5)
+		//{
 			var Assumed_payload_mass_base = parseFloat(elAssumed_payload_mass.value);
 			elPayload_mass_calculated5.textContent = Payload_mass_calculated.toFixed(2);
 			var Payload_change = Payload_mass_calculated/Assumed_payload_mass_base;
@@ -607,7 +612,7 @@
 	function Calculate()
 	{
 		var Assumed_payload_mass = parseFloat(elAssumed_payload_mass.value);
-		for (itt = 1; itt <= 5; ++itt)
+		for (itt = 1; itt <= 1; ++itt)
 		{
 			Assumed_payload_mass = CalculateTargetMass(Assumed_payload_mass, itt);
 		}
@@ -830,22 +835,23 @@
 		elLift_off_Mass.value = s_rocket_data[elRocket.selectedIndex][2];
 		elFairing_mass.value = s_rocket_data[elRocket.selectedIndex][3];
 		elFairing_jettison_velocity.value = s_rocket_data[elRocket.selectedIndex][4];
-		elAssumed_payload_mass.value = s_rocket_data[elRocket.selectedIndex][5];
-		el2nd_Stage_mass_Ratio.value = s_rocket_data[elRocket.selectedIndex][6];
-		el3rd_Stage_mass_Ratio.value = s_rocket_data[elRocket.selectedIndex][7];
+		elJettisoned_battery_mass.value = s_rocket_data[elRocket.selectedIndex][5];
+		elAssumed_payload_mass.value = s_rocket_data[elRocket.selectedIndex][6];
+		el2nd_Stage_mass_Ratio.value = s_rocket_data[elRocket.selectedIndex][7];
+		el3rd_Stage_mass_Ratio.value = s_rocket_data[elRocket.selectedIndex][8];
 		
-		el1st_Dry_to_Wet_mass_Ratio.value = s_rocket_data[elRocket.selectedIndex][8];
-		el2nd_Dry_to_Wet_mass_Ratio.value = s_rocket_data[elRocket.selectedIndex][9];
-		elTransfer_Orbit_Stage_mass_Ratio.value = s_rocket_data[elRocket.selectedIndex][10];
-		elUnused_propellant_of_1st_Stage.value = s_rocket_data[elRocket.selectedIndex][11];
-		elUnused_propellant_of_2nd_Stage.value = s_rocket_data[elRocket.selectedIndex][12];
-		elUnused_propellant_of_Transfer_Orbit_Stage.value = s_rocket_data[elRocket.selectedIndex][13];
-		elFirst_stage_isp_sea_level_or_at_the_start_altitude.value = s_rocket_data[elRocket.selectedIndex][14];
-		elFirst_stage_isp_vac.value = s_rocket_data[elRocket.selectedIndex][15];
-		elSecond_stage_isp_vac.value = s_rocket_data[elRocket.selectedIndex][16];
-		elTransfer_Orbit_Stage_isp.value = s_rocket_data[elRocket.selectedIndex][17];
+		el1st_Dry_to_Wet_mass_Ratio.value = s_rocket_data[elRocket.selectedIndex][9];
+		el2nd_Dry_to_Wet_mass_Ratio.value = s_rocket_data[elRocket.selectedIndex][10];
+		elTransfer_Orbit_Stage_mass_Ratio.value = s_rocket_data[elRocket.selectedIndex][11];
+		elUnused_propellant_of_1st_Stage.value = s_rocket_data[elRocket.selectedIndex][12];
+		elUnused_propellant_of_2nd_Stage.value = s_rocket_data[elRocket.selectedIndex][13];
+		elUnused_propellant_of_Transfer_Orbit_Stage.value = s_rocket_data[elRocket.selectedIndex][14];
+		elFirst_stage_isp_sea_level_or_at_the_start_altitude.value = s_rocket_data[elRocket.selectedIndex][15];
+		elFirst_stage_isp_vac.value = s_rocket_data[elRocket.selectedIndex][16];
+		elSecond_stage_isp_vac.value = s_rocket_data[elRocket.selectedIndex][17];
+		elTransfer_Orbit_Stage_isp.value = s_rocket_data[elRocket.selectedIndex][18];
 		
-		var spacePort = s_rocket_data[elRocket.selectedIndex][19];
+		var spacePort = s_rocket_data[elRocket.selectedIndex][20];
 		for (var i=0; i < s_start_point_count; ++i)
 		{
 			if ( s_start_point_data[i][0] == spacePort )
@@ -856,7 +862,7 @@
 			}
 		}
 		
-		var orbit = s_rocket_data[elRocket.selectedIndex][20];
+		var orbit = s_rocket_data[elRocket.selectedIndex][21];
 		for (var i=0; i < s_orbit_count; ++i)
 		{
 			if ( s_orbit_data[i][0] == orbit )
@@ -867,7 +873,7 @@
 			}
 		}
 		
-		var fuel = s_rocket_data[elRocket.selectedIndex][18];
+		var fuel = s_rocket_data[elRocket.selectedIndex][19];
 		for (var i=0; i < s_fuel_count; ++i)
 		{
 			if ( s_fuel_name[i] == fuel )
@@ -956,6 +962,7 @@
 		elLift_off_Mass.addEventListener('change', Calculate);
 		elFairing_mass.addEventListener('change', Calculate);
 		elFairing_jettison_velocity.addEventListener('change', Calculate);
+		elJettisoned_battery_mass.addEventListener('change', Calculate);
 		elAssumed_payload_mass.addEventListener('change', Calculate);
 		el2nd_Stage_mass_Ratio.addEventListener('change', Calculate);
 		el3rd_Stage_mass_Ratio.addEventListener('change', Calculate);
