@@ -29,6 +29,9 @@
 			text-align: left;
 			max-width:1200px;
         }
+		input{width:64px; font-size: 1.1em;}
+		input[type=range]{width:96px;}
+		select{font-size: 1.1em;}
         .info {
             background-color: gainsboro;
             padding: 15px;
@@ -36,6 +39,9 @@
 			bottom: 0;
 			right: 0;
         }
+		table {
+			border-collapse: collapse;
+		}
         ul {
             margin: 0;
         }
@@ -55,157 +61,156 @@
 <div class="content">
 <p align=center><font size="32">Rocket Calculator</font></p>
 
-
-<table border="1">
+<table border="0">
 
 <tr>
-<td>Rocket</td>
 <td>
-	<select id="Rocket"></select>
+	<p>Rocket</p>
+	<select id="Rocket"></select> <font size="2"> <label id="RocketDescription"></label> </font>
+	
 	<table border="1">
-	<tr><td>Fuel</td></td><td> <select id="Fuel"></select> </td> <td></td></tr>
-	<tr><td>Stages</td><td> <label id="Stages"    ></label></td><td></td></tr>
-	<tr><td>Thrust-to-weight ratio</td><td> <input id="Thrust_to_weight_ratio">           </td><td></td></tr>
-	<tr><td>Lift-off Mass</td><td> <input id="Lift_off_Mass">                             </td><td>Kg</td></tr>
-	<tr><td>Fairing mass</td><td> <input id="Fairing_mass">                               </td><td>Kg</td></tr>
-	<tr><td>Fairing jettison velocity</td><td> <input id="Fairing_jettison_velocity">     </td><td>m/s</td></tr>
-	<tr class="Expanding"><td>Fairing jettison specific velocity</td><td> <label id="Fairing_jettison_specific_velocity"    ></label></td><td>m/s</td></tr>
-	<tr><td>Jettisoned battery mass</td><td> <input id="Jettisoned_battery_mass" value="0">                   </td><td>Kg</td></tr>
+	<tr><td width=460>Fuel</td></td><td width=200> <select id="Fuel"></select> </td></tr>
+	<tr><td>Stages</td><td> <label id="Stages"></label></td></tr>
+	<tr><td>Thrust-to-weight ratio</td><td> <input id="Thrust_to_weight_ratio"></td></tr>
+	<tr><td>Lift-off Mass</td><td> <input id="Lift_off_Mass">Kg</td></tr>
+	<tr><td>Fairing mass</td><td> <input id="Fairing_mass">Kg</td></tr>
+	<tr><td>Fairing jettison velocity</td><td> <input id="Fairing_jettison_velocity">m/s</td></tr>
+	<tr class="Expanding"><td>Fairing jettison specific velocity</td><td> <label id="Fairing_jettison_specific_velocity"></label>m/s</td></tr>
+	<tr><td>Jettisoned battery mass</td><td> <input id="Jettisoned_battery_mass" value="0">Kg</td></tr>
 
-	<tr><td>Assumed payload mass</td><td> <input id="Assumed_payload_mass" value="750">                   </td><td>Kg</td></tr>
+	<tr><td>Assumed payload mass</td><td> <input id="Assumed_payload_mass" value="750">Kg</td></tr>
 	
-	<tr><td>Payload to Lift-off mass Ratio</td><td> <label id="Payload_to_Lift_off_mass_Ratio"    ></label></td><td>%</td></tr>
+	<tr><td>Payload to Lift-off mass Ratio</td><td> <label id="Payload_to_Lift_off_mass_Ratio"></label>%</td></tr>
 	
-	<tr><td>2nd Stage mass Ratio</td><td> <input id="_2nd_Stage_mass_Ratio">                               </td><td>%</td></tr>
-	<tr><td>3rd Stage mass Ratio</td><td> <input id="_3rd_Stage_mass_Ratio">                               </td><td>%</td></tr>
+	<tr><td>2nd Stage mass Ratio</td><td> <input id="_2nd_Stage_mass_Ratio">%</td></tr>
+	<tr><td>3rd Stage mass Ratio</td><td> <input id="_3rd_Stage_mass_Ratio">%</td></tr>
 	
 	
 	<tr><td>1st Dry to Wet mass Ratio</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="_1st_Dry_to_Wet_mass_Ratio_Range">
-											   <input id="_1st_Dry_to_Wet_mass_Ratio"></td><td>%</td></tr>
+											   <input id="_1st_Dry_to_Wet_mass_Ratio">%</td></tr>
 
 	<tr><td>2nd Dry to Wet mass Ratio</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="_2nd_Dry_to_Wet_mass_Ratio_Range">
-											   <input id="_2nd_Dry_to_Wet_mass_Ratio"></td><td>%</td></tr>
+											   <input id="_2nd_Dry_to_Wet_mass_Ratio">%</td></tr>
 
 	<tr><td>Transfer Orbit Stage mass Ratio</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Transfer_Orbit_Stage_mass_Ratio_Range">
-											   <input id="Transfer_Orbit_Stage_mass_Ratio"></td><td>%</td></tr>
+											   <input id="Transfer_Orbit_Stage_mass_Ratio">%</td></tr>
 
 	<tr><td>Unused propellant of 1st Stage</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Unused_propellant_of_1st_Stage_Range">
-											   <input id="Unused_propellant_of_1st_Stage"></td><td>%</td></tr>
+											   <input id="Unused_propellant_of_1st_Stage">%</td></tr>
 
 	<tr><td>Unused propellant of 2nd Stage</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Unused_propellant_of_2nd_Stage_Range">
-											   <input id="Unused_propellant_of_2nd_Stage"></td><td>%</td></tr>
+											   <input id="Unused_propellant_of_2nd_Stage">%</td></tr>
 
 	<tr><td>Unused propellant of Transfer Orbit Stage</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Unused_propellant_of_Transfer_Orbit_Stage_Range">
-											   <input id="Unused_propellant_of_Transfer_Orbit_Stage"></td><td>%</td></tr>
+											   <input id="Unused_propellant_of_Transfer_Orbit_Stage">%</td></tr>
 
 	<tr><td>First stage isp sea level or at the start altitude</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="First_stage_isp_sea_level_or_at_the_start_altitude_Range">
-											   <input id="First_stage_isp_sea_level_or_at_the_start_altitude"></td><td>s</td></tr>
+											   <input id="First_stage_isp_sea_level_or_at_the_start_altitude">s</td></tr>
 
 	<tr><td>First stage isp vac</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="First_stage_isp_vac_Range">
-											   <input id="First_stage_isp_vac"></td><td>s</td></tr>
+											   <input id="First_stage_isp_vac">s</td></tr>
 
 	<tr><td>Second stage isp vac</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Second_stage_isp_vac_Range">
-											   <input id="Second_stage_isp_vac"></td><td>s</td></tr>
+											   <input id="Second_stage_isp_vac">s</td></tr>
 
 	<tr><td>Transfer Orbit Stage isp</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Transfer_Orbit_Stage_isp_Range">
-											   <input id="Transfer_Orbit_Stage_isp"></td><td>s</td></tr>
+											   <input id="Transfer_Orbit_Stage_isp">s</td></tr>
 
 	</table>
 </td>
 </tr>
 
 <tr>
-<td>Spaceport</td>
 <td>
-	<select id="StartingPoint">
-	</select>
+	<p>Spaceport</p>
+	<select id="StartingPoint"> </select>Air Launch<input type="checkbox" id="Air_Launch">
 
 	<table border="1">
-	<tr><td>Starting Point Altitude</td><td> <input id="Starting_Point_Altitude">           </td><td>Km</td></tr>
-	<tr><td>Additional Speed</td><td> <input id="Additional_Speed"              value=0>    </td><td>m/s</td></tr>
-	<tr><td>Spaceport latitude</td><td> <input id="Spaceport_latitude"          >           </td><td>deg</td></tr>
+	<tr><td width=460>Starting Point Altitude</td><td width=200> <input id="Starting_Point_Altitude">Km</td></tr>
+	<tr><td>Additional Speed</td><td> <input id="Additional_Speed"              value=0>m/s</td></tr>
+	<tr><td>Spaceport latitude</td><td> <input id="Spaceport_latitude"          >deg</td></tr>
 	
-	<tr class="Expanding"><td>Intermediate angle</td><td> <label id="Intermediate_angle"    ></label></td><td>deg</td></tr>
-	<tr><td>Launch azimuth</td><td> <label id="Launch_azimuth"            ></label></td><td>deg</td></tr>
-	<tr><td>Launch point speed</td><td> <label id="Launch_point_speed"    ></label></td><td>m/s</td></tr>
-	<tr class="Expanding"><td>Starting Point Altitude orbital velosity</td><td> <label id="Starting_Point_Altitude_orbital_velosity"    ></label></td><td>m/s</td></tr>
-	<tr class="Expanding"><td>Absolute orbital velocity</td><td> <label id="Absolute_orbital_velocity"    ></label></td><td>m/s</td></tr>
-	<tr><td>Orbital period</td><td> <label id="Orbital_period"    ></label></td><td>min</td></tr>
-	<tr class="Expanding"><td>Relative orbital velocity</td><td> <label id="Orbital_velocity"    ></label></td><td>m/s</td></tr>
-	<tr class="Expanding"><td>Orbital velocity increment due to the Earth rotation</td><td> <label id="Orbital_velocity_increment_due_to_the_Earth_rotation"    ></label></td><td>m/s</td></tr>
-	<tr class="Expanding"><td>Specific velocity for circular orbit</td><td> <label id="Specific_velocity_for_circular_orbit"    ></label></td><td>m/s</td></tr>
-	<tr><td>Specific velocity for target orbit</td><td> <label id="Specific_velocity_for_target_orbit"    ></label></td><td>m/s</td></tr>
-	<tr class="Expanding"><td>Specific velocity for LEO</td><td> <label id="Specific_velocity_for_LEO"    ></label></td><td>m/s</td></tr>
+	<tr class="Expanding"><td>Intermediate angle</td><td> <label id="Intermediate_angle"    ></labeldeg></td></tr>
+	<tr><td>Launch azimuth</td><td> <label id="Launch_azimuth"            ></label>deg</td></tr>
+	<tr><td>Launch point speed</td><td> <label id="Launch_point_speed"    ></label>m/s</td></tr>
+	<tr class="Expanding"><td>Starting Point Altitude orbital velosity</td><td> <label id="Starting_Point_Altitude_orbital_velosity"    ></label>m/s</td></tr>
+	<tr class="Expanding"><td>Absolute orbital velocity</td><td> <label id="Absolute_orbital_velocity"    ></label>m/s</td></tr>
+	<tr class="Expanding"><td>Relative orbital velocity</td><td> <label id="Orbital_velocity"    ></label>m/s</td></tr>
+	<tr class="Expanding"><td>Orbital velocity increment due to the Earth rotation</td><td> <label id="Orbital_velocity_increment_due_to_the_Earth_rotation"    ></label>m/s</td></tr>
+	<tr class="Expanding"><td>Specific velocity for circular orbit</td><td> <label id="Specific_velocity_for_circular_orbit"    ></label>m/s</td></tr>
+	<tr class="Expanding"><td>Specific velocity for LEO</td><td> <label id="Specific_velocity_for_LEO"    ></label>m/s</td></tr>
 	</table>	
 </td>
 </tr>
 
 <tr>
-<td>Orbit</td>
 <td>
+	<p>Orbit</p>
 	<select id="Orbit">
 	</select>
 	<table border="1">
-	<tr><td>Orbit Perigee</td><td> <input id="Orbit_Perigee"                    value=200>  </td><td>Km</td></tr>
-	<tr><td>Orbit Apogee</td><td> <input id="Orbit_Apogee"                      value=0>    </td><td>Km</td></tr>
-	<tr><td>Orbit Inclination</td><td> <input id="Orbit_Inclination"            value=28.5> </td><td>deg</td></tr>
-	<tr><td>Extra speed for flight to the planets</td><td> <input id="Extra_speed_for_flight_to_the_planets"            value=0.0> </td><td>m/s</td></tr>
+	<tr><td width=460>Orbital period</td><td width=200> <label id="Orbital_period"    ></label>min</td></tr>
+	<tr><td>Orbit Perigee</td><td> <input id="Orbit_Perigee"                    value=200>Km</td></tr>
+	<tr><td>Orbit Apogee</td><td> <input id="Orbit_Apogee"                      value=0>Km</td></tr>
+	<tr><td>Orbit Inclination</td><td> <input id="Orbit_Inclination"            value=28.5>deg</td></tr>
+	<tr><td>Specific velocity for target orbit</td><td> <label id="Specific_velocity_for_target_orbit"    ></label>m/s</td></tr>
+	<tr><td>Extra speed for flight to the planets</td><td> <input id="Extra_speed_for_flight_to_the_planets"            value=0.0>m/s</td></tr>
 	</table>	
 </td>
 </tr>
 
 <tr>
-<td>Losses</td>
 <td>
+	<p>Losses</p>
 	<table border="1">
-	<tr class="Expanding"><td>Gravity losses at specific altitude</td><td> <label id="Gravity_losses_at_specific_altitude"    ></label></td><td>m/s</td></tr>
-	<tr class="Expanding"><td>Gravity losses</td><td> <label id="Gravity_losses"            ></label></td><td>m/s</td></tr>
-	<tr><td>Aerodynamic losses</td><td> <label id="Aerodynamic_losses"    ></label></td><td>m/s</td></tr>
-	<tr><td>Summary losses</td><td> <label id="Summary_losses"    ></label></td><td>m/s</td></tr>
-	<tr><td>Assumed losses</td><td> <label id="Assumed_losses"    ></label></td><td>%</td></tr>
-	<tr><td>Specific velocity with losses</td><td> <label id="Specific_velocity_with_losses"    ></label></td><td>m/s</td></tr>
+	<tr class="Expanding"><td>Gravity losses at specific altitude</td><td> <label id="Gravity_losses_at_specific_altitude"    ></label>m/s</td></tr>
+	<tr class="Expanding"><td>Gravity losses</td><td> <label id="Gravity_losses"            ></label>m/s</td></tr>
+	<tr><td width=460>Aerodynamic losses</td><td width=200> <label id="Aerodynamic_losses"    ></label>m/s</td></tr>
+	<tr><td>Summary losses</td><td> <label id="Summary_losses"    ></label>m/s</td></tr>
+	<tr><td>Assumed losses</td><td> <label id="Assumed_losses"    ></label>%</td></tr>
+	<tr><td>Specific velocity with losses</td><td> <label id="Specific_velocity_with_losses"    ></label>m/s</td></tr>
 	</table>
 </td>
 </tr>
 
 <tr>
-<td>Output</td>
 <td>
+	<p>Output</p>
 	<table border="1">
-	<tr class="Expanding"><td>First stage average trajectory isp</td><td> <label id="First_stage_average_trajectory_isp"    ></label></td><td>s</td></tr>
-	<tr><td>First stage specific velocity</td><td> <label id="First_stage_specific_velocity"    ></label></td><td>m/s</td></tr>
-	<tr class="Expanding"><td>First stage final mass</td><td> <label id="First_stage_final_mass"    ></label></td><td>Kg</td></tr>
-	<tr class="Expanding"><td>First stage propellant mass</td><td> <label id="First_stage_propellant_mass"    ></label></td><td>Kg</td></tr>
-	<tr class="Expanding"><td>First stage dry mass</td><td> <label id="First_stage_dry_mass"    ></label></td><td>Kg</td></tr>
+	<tr class="Expanding"><td>First stage average trajectory isp</td><td> <label id="First_stage_average_trajectory_isp"></label>s</td></tr>
+	<tr><td width=460>First stage specific velocity</td><td width=200> <label id="First_stage_specific_velocity"></label>m/s</td></tr>
+	<tr class="Expanding"><td>First stage final mass</td><td> <label id="First_stage_final_mass"></label>Kg</td></tr>
+	<tr class="Expanding"><td>First stage propellant mass</td><td> <label id="First_stage_propellant_mass"></label>Kg</td></tr>
+	<tr class="Expanding"><td>First stage dry mass</td><td> <label id="First_stage_dry_mass"></label>Kg</td></tr>
 	
-	<tr><td>Second stage specific velocity</td><td> <label id="Second_stage_specific_velocity"    ></label></td><td>m/s</td></tr>
-	<tr class="Expanding"><td>Second stage total (Start) mass</td><td> <label id="Second_stage_total_Start_mass"    ></label></td><td>Kg</td></tr>
-	<tr class="Expanding"><td>Second stage total mass before fairing jettison</td><td> <label id="Second_stage_total_mass_before_fairing_jettison"    ></label></td><td>Kg</td></tr>
-	<tr class="Expanding"><td>Second stage total mass before battery jettison</td><td> <label id="Second_stage_total_mass_before_battery_jettison"    ></label></td><td>Kg</td></tr>
-	<tr class="Expanding"><td>Second stage specific velocity before battery jettison</td><td> <label id="Second_stage_specific_velocity_before_battery_jettison"    ></label></td><td>Kg</td></tr>
+	<tr><td>Second stage specific velocity</td><td> <label id="Second_stage_specific_velocity"    ></label>m/s</td></tr>
+	<tr class="Expanding"><td>Second stage total (Start) mass</td><td> <label id="Second_stage_total_Start_mass"    ></label>Kg</td></tr>
+	<tr class="Expanding"><td>Second stage total mass before fairing jettison</td><td> <label id="Second_stage_total_mass_before_fairing_jettison"    ></label>Kg</td></tr>
+	<tr class="Expanding"><td>Second stage total mass before battery jettison</td><td> <label id="Second_stage_total_mass_before_battery_jettison"    ></label>Kg</td></tr>
+	<tr class="Expanding"><td>Second stage specific velocity before battery jettison</td><td> <label id="Second_stage_specific_velocity_before_battery_jettison"    ></label>Kg</td></tr>
 	
-	<tr class="Expanding"><td>Second stage final mass</td><td> <label id="Second_stage_final_mass"    ></label></td><td>Kg</td></tr>
-	<tr class="Expanding"><td>Second stage propellant mass</td><td> <label id="Second_stage_propellant_mass"    ></label></td><td>Kg</td></tr>
-	<tr class="Expanding"><td>Second stage dry mass</td><td> <label id="Second_stage_dry_mass"    ></label></td><td>Kg</td></tr>
+	<tr class="Expanding"><td>Second stage final mass</td><td> <label id="Second_stage_final_mass"    ></label>Kg</td></tr>
+	<tr class="Expanding"><td>Second stage propellant mass</td><td> <label id="Second_stage_propellant_mass"    ></label>Kg</td></tr>
+	<tr class="Expanding"><td>Second stage dry mass</td><td> <label id="Second_stage_dry_mass"    ></label>Kg</td></tr>
 	
-	<tr><td>Transfer Orbit stage specific velocity (required)</td><td> <label id="Transfer_Orbit_stage_specific_velocity_required"    ></label></td><td>m/s</td></tr>
-	<tr class="Expanding"><td>Transfer Orbit stage total (Start) mass</td><td> <label id="Transfer_Orbit_stage_total_Start_mass"    ></label></td><td>Kg</td></tr>
-	<tr class="Expanding"><td>Transfer Orbit stage final mass</td><td> <label id="Transfer_Orbit_stage_final_mass"    ></label></td><td>Kg</td></tr>
-	<tr class="Expanding"><td>Transfer Orbit stage propellant mass</td><td> <label id="Transfer_Orbit_stage_propellant_mass"    ></label></td><td>Kg</td></tr>
-	<tr class="Expanding"><td>Transfer Orbit stage dry mass</td><td> <label id="Transfer_Orbit_stage_dry_mass"    ></label></td><td>Kg</td></tr>
+	<tr><td>Transfer Orbit stage specific velocity (required)</td><td> <label id="Transfer_Orbit_stage_specific_velocity_required"    ></label>m/s</td></tr>
+	<tr class="Expanding"><td>Transfer Orbit stage total (Start) mass</td><td> <label id="Transfer_Orbit_stage_total_Start_mass"    ></label>Kg</td></tr>
+	<tr class="Expanding"><td>Transfer Orbit stage final mass</td><td> <label id="Transfer_Orbit_stage_final_mass"    ></label>Kg</td></tr>
+	<tr class="Expanding"><td>Transfer Orbit stage propellant mass</td><td> <label id="Transfer_Orbit_stage_propellant_mass"    ></label>Kg</td></tr>
+	<tr class="Expanding"><td>Transfer Orbit stage dry mass</td><td> <label id="Transfer_Orbit_stage_dry_mass"    ></label>Kg</td></tr>
 	</table>
 </td>
 </tr>
 
 
 <tr>
-<td>Result</td>
 <td>
+	<p>Result</p>
 	<table border="1">
-	<tr><td>Payload mass (calculated)</td><td> <label id="Payload_mass_calculated"></label></td><td>Kg</td></tr>
-	<tr><td>Payload mass (5)</td><td> <label id="Payload_mass_calculated5"></label></td><td>Kg</td></tr>
-	<tr><td>Payload change</td><td> <label id="Payload_change"    ></label></td><td>%</td></tr>
-	<tr><td>Expand</td><td><input type="checkbox" id="Expand"></td><td></td></tr>
+	<tr class="Expanding"><td>Payload mass (1)</td><td> <label id="Payload_mass_calculated"></label>Kg</td></tr>
+	<tr><td width=460>Payload mass (calculated)</td><td width=200> <label id="Payload_mass_calculated5"></label>Kg</td></tr>
+	<tr><td>Payload change</td><td> <label id="Payload_change"    ></label>%</td></tr>
+	<tr><td>Expand</td><td><input type="checkbox" id="Expand"></td></tr>
 	</table>
 </td>
 </tr>
@@ -215,7 +220,8 @@
 
 <script>
 	var elStartingPoint = document.querySelector('#StartingPoint');
-
+	
+	var elAir_Launch = document.querySelector('#Air_Launch');
 	var elStarting_Point_Altitude = document.querySelector('#Starting_Point_Altitude');
 	var elAdditional_Speed = document.querySelector('#Additional_Speed');
 	var elOrbit_Perigee = document.querySelector('#Orbit_Perigee');
@@ -239,6 +245,7 @@
 
 	//=== ROCKET ===
 	var elRocket = document.querySelector('#Rocket');
+	var elRocketDescription = document.querySelector('#RocketDescription');
 	var elThrust_to_weight_ratio = document.querySelector('#Thrust_to_weight_ratio');
 	
 	var elStages = document.querySelector('#Stages');
@@ -354,22 +361,23 @@
 						   [10, 11, 30, 3, 3,   5, 320, 355, 375, 370],
 						   [14, 14, 30, 3, 3,   5, 370, 430, 470, 370]];
 	
-	var s_rocket_count = 15;
-	var s_rocket_data = [["Rocket 1",                      1.19,  33400,  150,  3500, 0,  771,   26.94, 0,    8,     10,     20,    1.5, 1.5, 1,   290.5, 327,   365, 320, "Lox/Kero",   "Canaveral",       "LEO"],
-						 ["Rocket 2",                      1.19,  33400,  100,  3500, 0,  458,   26.94, 5,    9.92,  12.38,  20,    2,   2,   1,   282.0, 321,   352, 320, "Lox/Kero",   "Canaveral",       "SSO"],
-						 ["Zenit-2",                       1.605, 459000, 1800, 3500, 0,  13470, 23.20, 0,    7.93,  9.15,   20,    1.2, 1.2, 0.8, 309.0, 336,   349, 352, "Lox/Kero",   "Baikonur",        "LEO"],
-						 ["Zenit-3SL",                     1.57,  468240, 1850, 3500, 0,  3170,  24.32, 4.88, 7.78,  9.15,   14.42, 1.2, 1.2, 0.8, 309.5, 337.2, 349, 361, "Lox/Kero",   "Sea Launch",      "GEO"],
-						 ["Delta-IV Medium",               1.21,  264840, 2800, 4500, 0,  11470, 14.51, 0,    11.70, 11.79,  20,    2,   2,   0.8, 360.0, 412,   462, 300, "Lox/LH2",    "Canaveral",       "LEO"],
-						 ["Falcon9 V1.0",                  1.22,  318000, 1000, 3500, 0,  9000,  19.18, 0.00, 6.74,  5.96,   20.00, 1.5, 1.5, 1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO"],
-						 ["Falcon 1e",                     1.19,  47750,  145,  3500, 0,  650,   11.90, 0.00, 6.13,  11.07,  20.00, 2,   2,   1,   263.0, 304,   317, 300, "Lox/Kero",   "Canaveral",       "LEO"],
-						 ["Electron",                      1.32,  12550,  44,   3500, 50, 240,   21.39, 0.00, 9.31,  10.42,  20.00, 2,   2,   1,   256.0, 303,   333, 240, "Lox/Kero",   "Rocket Lab LC-1", "LEO"],
-						 ["Electron Curie",                1.32,  12550,  44,   3500, 50, 150,   21.39, 3.00, 9.31,  10.42,  15.00, 1.5, 1.5, 1,   256.0, 303,   333, 240, "Lox/Kero",   "Rocket Lab LC-1", "SSO"],
-						 ["Launcher One",                  1.44,  23300,  100,  3500, 0,  300,   12.66, 0.00, 8.00,   9.00,  20.00, 2,   2,   1,   263.0, 304,   317, 300, "Lox/Kero",   "Canaveral",       "SSO"],
-						 ["Terran 1 (Relativity)",         1.2,   52730,  400,  3500, 0,  1250,  24.46, 0.00, 8.00,   9.00,  20.00, 2,   2,   1,   286.0, 326,   360, 300, "Lox/Methan", "Canaveral",       "LEO"],
-						 ["XS-1 tactical missile (Astra)", 1.6,   7560,   30,   3500, 0,  100,   19.44, 0.00, 9.50,  10.00,  20.00, 2,   2,   1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO"],
-						 ["Firefly Alpha",                 1.25,  54000,  330,  3500, 0,  1000,  25.00, 0.00, 7.50,  6.74,   20.00, 2,   2,   1,   265.0, 295,   322, 300, "Lox/Kero",   "Canaveral",       "LEO"],
-						 ["abl RS1 Old",                   1.2,   26459,  300,  3500, 0,  900,   15.75, 0.00, 5.00,  4.00,   20.00, 2,   2,   1,   262.0, 308,   345, 300, "Lox/Kero",   "Camden",          "LEO"],
-						 ["abl RS1",                       1.2,   47627,  400,  3500, 0,  1200,  18.06, 0.00, 5.00,  5.00,   20.00, 2,   2,   1,   265.0, 295.6, 322, 300, "Lox/Kero",   "Camden",          "LEO"]
+	var s_rocket_count = 16;
+	var s_rocket_data = [["Rocket 1",                      1.19,  33400,  150,  3500, 0,  776,   26.94,   0,      8,     10,     20,    1.5, 1.5, 1,   290.5, 327,   365, 320, "Lox/Kero",   "Canaveral",       "LEO", 0, "2stages - aggressive but realistic goal"],
+						 ["Rocket 2",                      1.19,  33400,  100,  3500, 0,  440,   26.94,   5,      9.92,  12.38,  20,    2,   2,   1,   282.0, 321,   352, 320, "Lox/Kero",   "Canaveral",       "SSO", 0, "3stages - easily achievable"],
+						 ["Rocket 3",                      1.2,   75140,  400,  3500, 0,  1094,  15.49,   3.5,    9.15,  11.65,  20,    2,   2,   1,   282.0, 321,   352, 320, "Lox/Kero",   "Canaveral",       "SSO", 0, "SpaceX style 9 E2 engines at the 1st stage"],
+						 ["Zenit-2",                       1.605, 459000, 1800, 3500, 0,  13470, 23.195,  0,      7.93,  9.15,   20,    1.2, 1.2, 0.8, 309.0, 336,   349, 352, "Lox/Kero",   "Baikonur",        "LEO", 0, ""],
+						 ["Zenit-3SL",                     1.57,  468240, 1850, 3500, 0,  3170,  24.3196, 4.8825, 7.78,  9.15,   14.42, 1.2, 1.2, 0.8, 309.5, 337.2, 349, 361, "Lox/Kero",   "Sea Launch",      "GEO", 0, ""],
+						 ["Delta-IV Medium",               1.21,  264840, 2800, 4500, 0,  11470, 14.51,   0,      11.70, 11.79,  20,    2,   2,   0.8, 360.0, 412,   462, 300, "Lox/LH2",    "Canaveral",       "LEO", 0, ""],
+						 ["Falcon9 V1.0",                  1.22,  318000, 1000, 3500, 0,  9000,  19.18,   0.00,   6.74,  5.96,   20.00, 1.5, 1.5, 1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO", 0, ""],
+						 ["Falcon 1e",                     1.19,  47750,  145,  3500, 0,  650,   11.90,   0.00,   6.13,  11.07,  20.00, 2,   2,   1,   263.0, 304,   317, 300, "Lox/Kero",   "Canaveral",       "LEO", 0, ""],
+						 ["Electron",                      1.32,  12550,  44,   3500, 50, 240,   21.39,   0.00,   9.31,  10.42,  20.00, 2,   2,   1,   256.0, 303,   333, 240, "Lox/Kero",   "Rocket Lab LC-1", "LEO", 0, ""],
+						 ["Electron Curie",                1.32,  12550,  44,   3500, 50, 150,   21.39,   3.00,   9.31,  10.42,  15.00, 1.5, 1.5, 1,   256.0, 303,   333, 250, "Lox/Kero",   "Rocket Lab LC-1", "SSO", 0, ""],
+						 ["Launcher One",                  1.44,  23300,  100,  3500, 0,  300,   12.66,   0.00,   8.00,   9.00,  20.00, 2,   2,   1,   290.0, 308,   328, 300, "Lox/Kero",   "Canaveral",       "SSO", 1, ""],
+						 ["Terran 1 (Relativity)",         1.2,   52730,  400,  3500, 0,  1250,  24.46,   0.00,   8.00,   9.00,  20.00, 2,   2,   1,   286.0, 326,   360, 300, "Lox/Methan", "Canaveral",       "LEO", 0, ""],
+						 ["XS-1 tactical missile (Astra)", 1.6,   7560,   30,   3500, 0,  100,   19.44,   0.00,   9.50,  10.00,  20.00, 2,   2,   1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO", 0, ""],
+						 ["Firefly Alpha",                 1.25,  54000,  330,  3500, 0,  1000,  25.00,   0.00,   7.50,  6.74,   20.00, 2,   2,   1,   265.0, 295.6, 322, 300, "Lox/Kero",   "Canaveral",       "LEO", 0, ""],
+						 ["abl RS1 Old",                   1.2,   26459,  300,  3500, 0,  900,   15.75,   0.00,   5.00,  4.00,   20.00, 2,   2,   1,   262.0, 308,   345, 300, "Lox/Kero",   "Camden",          "LEO", 0, ""],
+						 ["abl RS1",                       1.2,   47627,  400,  3500, 0,  1200,  18.06,   0.00,   5.00,  5.00,   20.00, 2,   2,   1,   265.0, 295.6, 322, 300, "Lox/Kero",   "Camden",          "LEO", 0, ""]
 						 ];
 	
 	function Rad2Deg(radians)
@@ -556,7 +564,7 @@
 					-((Lift_off_Mass*(v2nd_Stage_mass_Ratio-v3rd_Stage_mass_Ratio)/100)*(1-v2nd_Dry_to_Wet_mass_Ratio/100))/100*
 					 (100-Unused_propellant_of_2nd_Stage)-Jettisoned_battery_mass;
 			
-			Second_stage_dry_mass = (Second_stage_total_Start_mass-Second_stage_final_mass)*(1+Unused_propellant_of_2nd_Stage/100)/(1/(v2nd_Dry_to_Wet_mass_Ratio/100)-1);
+			Second_stage_dry_mass = (Second_stage_total_Start_mass-Second_stage_final_mass)*(1+Unused_propellant_of_2nd_Stage/100)/(1/(v2nd_Dry_to_Wet_mass_Ratio/100)-1)-Fairing_mass*v2nd_Dry_to_Wet_mass_Ratio/100;
 			Second_stage_propellant_mass = Second_stage_dry_mass*(100/v2nd_Dry_to_Wet_mass_Ratio)-Second_stage_dry_mass;
 
 			Second_stage_total_mass_before_battery_jettison = Second_stage_dry_mass+0.67*Second_stage_propellant_mass;
@@ -589,8 +597,7 @@
 		var Transfer_Orbit_stage_final_mass = 1.0/(Math.exp(Transfer_Orbit_stage_specific_velocity_required/(Transfer_Orbit_Stage_isp*9.80665))/Transfer_Orbit_stage_total_Start_mass);
 		elTransfer_Orbit_stage_final_mass.textContent = Transfer_Orbit_stage_final_mass.toFixed(2);
 
-		var Transfer_Orbit_stage_dry_mass = v3rd_Stage_mass_Ratio == 0 ? 0 :
-			((Lift_off_Mass*v3rd_Stage_mass_Ratio/100-Fairing_mass-Assumed_payload_mass)*Transfer_Orbit_Stage_mass_Ratio/100);
+		var Transfer_Orbit_stage_dry_mass = v3rd_Stage_mass_Ratio == 0 ? 0 : ((Lift_off_Mass*v3rd_Stage_mass_Ratio/100-Assumed_payload_mass)*Transfer_Orbit_Stage_mass_Ratio/100);
 		elTransfer_Orbit_stage_dry_mass.textContent = Transfer_Orbit_stage_dry_mass.toFixed(2);
 		
 		var Transfer_Orbit_stage_propellant_mass = Transfer_Orbit_stage_dry_mass*(100/Transfer_Orbit_Stage_mass_Ratio)-Transfer_Orbit_stage_dry_mass ;
@@ -888,6 +895,11 @@
 				break;
 			}
 		}
+		
+		elAir_Launch.checked = s_rocket_data[elRocket.selectedIndex][22] != 0;
+		AirLaunchChange();
+		
+		elRocketDescription.textContent = s_rocket_data[elRocket.selectedIndex][23];
 	}
 	
 	function updateRocketAndCalc()
@@ -907,6 +919,25 @@
 			for (var i = 0; i < elsExpanding.length; i++)
 				elsExpanding[i].setAttribute("hidden","true");
 		}
+	}
+	
+	function AirLaunchChange()
+	{
+		if (elAir_Launch.checked)
+		{
+			elStarting_Point_Altitude.value = 12;
+			elAdditional_Speed.value = 250;
+		} else
+		{
+			elStarting_Point_Altitude.value = s_start_point_data[elStartingPoint.selectedIndex][3];
+			elAdditional_Speed.value = 0;
+		}
+	}
+	
+	function AirLaunchChangeAndCalc()
+	{
+		AirLaunchChange();
+		Calculate();
 	}
 	
 	function onPageLoad()
@@ -999,6 +1030,9 @@
 		elExpand.checked = false;
 		elExpand.addEventListener('change', ExpandChange);
 		ExpandChange();
+		
+		elAir_Launch.checked = false;
+		elAir_Launch.addEventListener('change', AirLaunchChangeAndCalc);
 		
 		updateRocket();
 		updateStartingPoint();
