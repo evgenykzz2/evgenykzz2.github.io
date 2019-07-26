@@ -27,7 +27,7 @@
 			background-color: #ffffff;
 			display: inline-block;
 			text-align: left;
-			max-width:1200px;
+			max-width:1800px;
         }
 		input{width:64px; font-size: 1.1em;}
 		input[type=range]{width:96px;}
@@ -62,14 +62,16 @@
 <p align=center><font size="32">Rocket Calculator</font></p>
 
 <table border="0">
+<td valign="top" width =750>
 
-<tr>
-<td>
-	<p>Rocket</p>
-	<select id="Rocket"></select> <font size="2"> <label id="RocketDescription"></label> </font>
+	<table border="0">
+	<tr>
+	<td>
+	<font size="6">Rocket<br></font>
+	<select id="Rocket"></select> <font size="2"><label id="RocketDescription"></label></font>
 	
 	<table border="1">
-	<tr><td width=460>Fuel</td></td><td width=200> <select id="Fuel"></select> </td></tr>
+	<tr><td width=460>Fuel</td></td><td width=220> <select id="Fuel"></select> </td></tr>
 	<tr><td>Stages</td><td> <label id="Stages"></label></td></tr>
 	<tr><td>Thrust-to-weight ratio</td><td> <input id="Thrust_to_weight_ratio"></td></tr>
 	<tr><td>Lift-off Mass</td><td> <input id="Lift_off_Mass">Kg</td></tr>
@@ -117,16 +119,34 @@
 											   <input id="Transfer_Orbit_Stage_isp">s</td></tr>
 
 	</table>
+	</td>
+	</tr>
+	
+	
+	<tr>
+	<td>
+	<font size="6">Result<br></font>
+	<table border="1">
+	<tr class="Expanding"><td>Payload mass (1)</td><td> <label id="Payload_mass_calculated"></label>Kg</td></tr>
+	<tr><td width=460>Payload mass (calculated)</td><td width=220> <label id="Payload_mass_calculated5"></label>Kg</td></tr>
+	<tr><td>Payload change</td><td> <label id="Payload_change"    ></label>%</td></tr>
+	<tr><td>Expand</td><td><input type="checkbox" id="Expand"></td></tr>
+	</table>
+	</td>
+	</tr>
+	</table>
 </td>
-</tr>
 
-<tr>
-<td>
-	<p>Spaceport</p>
+<td valign="top">
+
+	<table border="0">
+	<tr>
+	<td>
+	<font size="6">Spaceport<br></font>
 	<select id="StartingPoint"> </select>Air Launch<input type="checkbox" id="Air_Launch">
 
 	<table border="1">
-	<tr><td width=460>Starting Point Altitude</td><td width=200> <input id="Starting_Point_Altitude">Km</td></tr>
+	<tr><td width=460>Starting Point Altitude</td><td width=220> <input id="Starting_Point_Altitude">Km</td></tr>
 	<tr><td>Additional Speed</td><td> <input id="Additional_Speed"              value=0>m/s</td></tr>
 	<tr><td>Spaceport latitude</td><td> <input id="Spaceport_latitude"          >deg</td></tr>
 	
@@ -139,46 +159,46 @@
 	<tr class="Expanding"><td>Orbital velocity increment due to the Earth rotation</td><td> <label id="Orbital_velocity_increment_due_to_the_Earth_rotation"    ></label>m/s</td></tr>
 	<tr class="Expanding"><td>Specific velocity for circular orbit</td><td> <label id="Specific_velocity_for_circular_orbit"    ></label>m/s</td></tr>
 	<tr class="Expanding"><td>Specific velocity for LEO</td><td> <label id="Specific_velocity_for_LEO"    ></label>m/s</td></tr>
-	</table>	
-</td>
-</tr>
-
-<tr>
-<td>
-	<p>Orbit</p>
+	</table>
+	</tr>
+	</td>
+	
+	<tr>
+	<td>
+	<font size="6">Orbit<br></font>
 	<select id="Orbit">
 	</select>
 	<table border="1">
-	<tr><td width=460>Orbital period</td><td width=200> <label id="Orbital_period"    ></label>min</td></tr>
+	<tr><td width=460>Orbital period</td><td width=220> <label id="Orbital_period"    ></label>min</td></tr>
 	<tr><td>Orbit Perigee</td><td> <input id="Orbit_Perigee"                    value=200>Km</td></tr>
 	<tr><td>Orbit Apogee</td><td> <input id="Orbit_Apogee"                      value=0>Km</td></tr>
 	<tr><td>Orbit Inclination</td><td> <input id="Orbit_Inclination"            value=28.5>deg</td></tr>
 	<tr><td>Specific velocity for target orbit</td><td> <label id="Specific_velocity_for_target_orbit"    ></label>m/s</td></tr>
 	<tr><td>Extra speed for flight to the planets</td><td> <input id="Extra_speed_for_flight_to_the_planets"            value=0.0>m/s</td></tr>
 	</table>	
-</td>
-</tr>
+	</td>
+	</tr>
 
-<tr>
-<td>
-	<p>Losses</p>
+	<tr>
+	<td>
+	<font size="6">Losses<br></font>
 	<table border="1">
 	<tr class="Expanding"><td>Gravity losses at specific altitude</td><td> <label id="Gravity_losses_at_specific_altitude"    ></label>m/s</td></tr>
 	<tr class="Expanding"><td>Gravity losses</td><td> <label id="Gravity_losses"            ></label>m/s</td></tr>
-	<tr><td width=460>Aerodynamic losses</td><td width=200> <label id="Aerodynamic_losses"    ></label>m/s</td></tr>
+	<tr><td width=460>Aerodynamic losses</td><td width=220> <label id="Aerodynamic_losses"    ></label>m/s</td></tr>
 	<tr><td>Summary losses</td><td> <label id="Summary_losses"    ></label>m/s</td></tr>
 	<tr><td>Assumed losses</td><td> <label id="Assumed_losses"    ></label>%</td></tr>
 	<tr><td>Specific velocity with losses</td><td> <label id="Specific_velocity_with_losses"    ></label>m/s</td></tr>
 	</table>
-</td>
-</tr>
+	</td>
+	</tr>
 
-<tr>
-<td>
-	<p>Output</p>
+	<tr>
+	<td>
+	<font size="6">Output<br></font>
 	<table border="1">
 	<tr class="Expanding"><td>First stage average trajectory isp</td><td> <label id="First_stage_average_trajectory_isp"></label>s</td></tr>
-	<tr><td width=460>First stage specific velocity</td><td width=200> <label id="First_stage_specific_velocity"></label>m/s</td></tr>
+	<tr><td width=460>First stage specific velocity</td><td width=220> <label id="First_stage_specific_velocity"></label>m/s</td></tr>
 	<tr class="Expanding"><td>First stage final mass</td><td> <label id="First_stage_final_mass"></label>Kg</td></tr>
 	<tr class="Expanding"><td>First stage propellant mass</td><td> <label id="First_stage_propellant_mass"></label>Kg</td></tr>
 	<tr class="Expanding"><td>First stage dry mass</td><td> <label id="First_stage_dry_mass"></label>Kg</td></tr>
@@ -199,22 +219,10 @@
 	<tr class="Expanding"><td>Transfer Orbit stage propellant mass</td><td> <label id="Transfer_Orbit_stage_propellant_mass"    ></label>Kg</td></tr>
 	<tr class="Expanding"><td>Transfer Orbit stage dry mass</td><td> <label id="Transfer_Orbit_stage_dry_mass"    ></label>Kg</td></tr>
 	</table>
-</td>
-</tr>
-
-
-<tr>
-<td>
-	<p>Result</p>
-	<table border="1">
-	<tr class="Expanding"><td>Payload mass (1)</td><td> <label id="Payload_mass_calculated"></label>Kg</td></tr>
-	<tr><td width=460>Payload mass (calculated)</td><td width=200> <label id="Payload_mass_calculated5"></label>Kg</td></tr>
-	<tr><td>Payload change</td><td> <label id="Payload_change"    ></label>%</td></tr>
-	<tr><td>Expand</td><td><input type="checkbox" id="Expand"></td></tr>
+	</td>
+	</tr>
 	</table>
 </td>
-</tr>
-
 </table>
 </div>
 
