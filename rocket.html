@@ -62,7 +62,7 @@
 <p align=center><font size="32">Rocket Calculator</font></p>
 
 <table border="0">
-<td valign="top" width =750>
+<td valign="top" width=750 max-width=750>
 
 	<table border="0">
 	<tr>
@@ -84,8 +84,8 @@
 	
 	<tr><td>Payload to Lift-off mass Ratio</td><td> <label id="Payload_to_Lift_off_mass_Ratio"></label>%</td></tr>
 	
-	<tr><td>2nd Stage mass Ratio</td><td> <input id="_2nd_Stage_mass_Ratio">%</td></tr>
-	<tr><td>3rd Stage mass Ratio</td><td> <input id="_3rd_Stage_mass_Ratio">%</td></tr>
+	<tr><td>2nd Stage to Lift-off mass Ratio</td><td> <input id="_2nd_Stage_mass_Ratio">%</td></tr>
+	<tr><td>Transfer Orbit Stage to Lift-off mass Ratio</td><td> <input id="_3rd_Stage_mass_Ratio">%</td></tr>
 	
 	
 	<tr><td>1st Dry to Wet mass Ratio</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="_1st_Dry_to_Wet_mass_Ratio_Range">
@@ -94,7 +94,7 @@
 	<tr><td>2nd Dry to Wet mass Ratio</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="_2nd_Dry_to_Wet_mass_Ratio_Range">
 											   <input id="_2nd_Dry_to_Wet_mass_Ratio">%</td></tr>
 
-	<tr><td>Transfer Orbit Stage mass Ratio</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Transfer_Orbit_Stage_mass_Ratio_Range">
+	<tr><td>Transfer Orbit Stage Dry to Wet mass Ratio</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Transfer_Orbit_Stage_mass_Ratio_Range">
 											   <input id="Transfer_Orbit_Stage_mass_Ratio">%</td></tr>
 
 	<tr><td>Unused propellant of 1st Stage</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Unused_propellant_of_1st_Stage_Range">
@@ -103,7 +103,7 @@
 	<tr><td>Unused propellant of 2nd Stage</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Unused_propellant_of_2nd_Stage_Range">
 											   <input id="Unused_propellant_of_2nd_Stage">%</td></tr>
 
-	<tr><td>Unused propellant of Transfer Orbit Stage</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Unused_propellant_of_Transfer_Orbit_Stage_Range">
+	<tr class="3Stage"><td>Unused propellant of Transfer Orbit Stage</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Unused_propellant_of_Transfer_Orbit_Stage_Range">
 											   <input id="Unused_propellant_of_Transfer_Orbit_Stage">%</td></tr>
 
 	<tr><td>First stage isp sea level or at the start altitude</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="First_stage_isp_sea_level_or_at_the_start_altitude_Range">
@@ -115,8 +115,12 @@
 	<tr><td>Second stage isp vac</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Second_stage_isp_vac_Range">
 											   <input id="Second_stage_isp_vac">s</td></tr>
 
-	<tr><td>Transfer Orbit Stage isp</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Transfer_Orbit_Stage_isp_Range">
+	<tr class="3Stage"><td>Transfer Orbit Stage isp</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Transfer_Orbit_Stage_isp_Range">
 											   <input id="Transfer_Orbit_Stage_isp">s</td></tr>
+	
+	<tr><td>Specific Impulse Variation</td><td> <input id="Specific_Impulse_Variation" value=100>%</td></tr>
+	
+											   
 
 	</table>
 	</td>
@@ -198,7 +202,7 @@
 	<font size="6">Output<br></font>
 	<table border="1">
 	<tr class="Expanding"><td>First stage average trajectory isp</td><td> <label id="First_stage_average_trajectory_isp"></label>s</td></tr>
-	<tr><td width=460>First stage specific velocity</td><td width=220> <label id="First_stage_specific_velocity"></label>m/s</td></tr>
+	<tr><td width=460>First stage specific velocity</td><td width=220 max-width=220> <label id="First_stage_specific_velocity"></label>m/s</td></tr>
 	<tr class="Expanding"><td>First stage final mass</td><td> <label id="First_stage_final_mass"></label>Kg</td></tr>
 	<tr class="Expanding"><td>First stage propellant mass</td><td> <label id="First_stage_propellant_mass"></label>Kg</td></tr>
 	<tr class="Expanding"><td>First stage dry mass</td><td> <label id="First_stage_dry_mass"></label>Kg</td></tr>
@@ -288,6 +292,7 @@
 	var elTransfer_Orbit_Stage_isp_Range = document.querySelector('#Transfer_Orbit_Stage_isp_Range');
 	var elTransfer_Orbit_Stage_isp = document.querySelector('#Transfer_Orbit_Stage_isp');
 	var elExtra_speed_for_flight_to_the_planets = document.querySelector('#Extra_speed_for_flight_to_the_planets');
+	var elSpecific_Impulse_Variation = document.querySelector('#Specific_Impulse_Variation');
 
 	var elFuel = document.querySelector('#Fuel');
 	
@@ -327,6 +332,8 @@
 	var elPayload_change = document.querySelector('#Payload_change');
 	var elExpand = document.querySelector('#Expand');
 	var elsExpanding = document.querySelectorAll('.content tr[class="Expanding"]');
+	var els3Stage = document.querySelectorAll('.content tr[class="3Stage"]');
+	
 	
 	window.onload = onPageLoad;
 	
@@ -381,8 +388,8 @@
 						 ["Electron",                      1.32,  12550,  44,   3500, 50, 240,   21.39,   0.00,   9.31,  10.42,  20.00, 2,   2,   1,   256.0, 303,   333, 240, "Lox/Kero",   "Rocket Lab LC-1", "LEO", 0, ""],
 						 ["Electron Curie",                1.32,  12550,  44,   3500, 50, 150,   21.39,   3.00,   9.31,  10.42,  15.00, 1.5, 1.5, 1,   256.0, 303,   333, 250, "Lox/Kero",   "Rocket Lab LC-1", "SSO", 0, ""],
 						 ["Launcher One",                  1.44,  23300,  100,  3500, 0,  300,   12.66,   0.00,   8.00,   9.00,  20.00, 2,   2,   1,   290.0, 308,   328, 300, "Lox/Kero",   "Canaveral",       "SSO", 1, ""],
-						 ["Terran 1 (Relativity)",         1.2,   52730,  400,  3500, 0,  1250,  24.46,   0.00,   8.00,   9.00,  20.00, 2,   2,   1,   286.0, 326,   360, 300, "Lox/Methan", "Canaveral",       "LEO", 0, ""],
-						 ["XS-1 tactical missile (Astra)", 1.6,   7560,   30,   3500, 0,  100,   19.44,   0.00,   9.50,  10.00,  20.00, 2,   2,   1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO", 0, ""],
+						 ["Terran 1",                      1.2,   52730,  400,  3500, 0,  1250,  24.46,   0.00,   8.00,   9.00,  20.00, 2,   2,   1,   286.0, 326,   360, 300, "Lox/Methan", "Canaveral",       "LEO", 0, "Relativity"],
+						 ["XS-1 tactical missile",         1.6,   7560,   30,   3500, 0,  100,   19.44,   0.00,   9.50,  10.00,  20.00, 2,   2,   1,   266.0, 304,   336, 300, "Lox/Kero",   "Canaveral",       "LEO", 0, "Astra"],
 						 ["Firefly Alpha",                 1.25,  54000,  330,  3500, 0,  1000,  25.00,   0.00,   7.50,  6.74,   20.00, 2,   2,   1,   265.0, 295.6, 322, 300, "Lox/Kero",   "Canaveral",       "LEO", 0, ""],
 						 ["abl RS1 Old",                   1.2,   26459,  300,  3500, 0,  900,   15.75,   0.00,   5.00,  4.00,   20.00, 2,   2,   1,   262.0, 308,   345, 300, "Lox/Kero",   "Camden",          "LEO", 0, ""],
 						 ["abl RS1",                       1.2,   47627,  400,  3500, 0,  1200,  18.06,   0.00,   5.00,  5.00,   20.00, 2,   2,   1,   265.0, 295.6, 322, 300, "Lox/Kero",   "Camden",          "LEO", 0, ""]
@@ -425,7 +432,7 @@
 		var Launch_point_speed = 465.0*Math.cos(Deg2Rad(Spaceport_latitude));
 		elLaunch_point_speed.textContent = Launch_point_speed.toFixed(2);
 		
-		var Starting_Point_Altitude_orbital_velosity = Math.sqrt(gravity_const/(earth_radius));
+		var Starting_Point_Altitude_orbital_velosity = Math.sqrt(gravity_const/(earth_radius+Starting_Point_Altitude));
 		elStarting_Point_Altitude_orbital_velosity.textContent = Starting_Point_Altitude_orbital_velosity.toFixed(2);
 		
 		var Absolute_orbital_velocity = Math.sqrt(gravity_const/(earth_radius+Orbit_Perigee));
@@ -464,29 +471,28 @@
 		var Specific_velocity_for_LEO = 8023.0-Orbital_velocity_increment_due_to_the_Earth_rotation-Additional_Speed;
 		elSpecific_velocity_for_LEO.textContent = Specific_velocity_for_LEO.toFixed(2);
 		
+		var Specific_Impulse_Variation = parseFloat(elSpecific_Impulse_Variation.value);
 		var Fairing_jettison_velocity = parseFloat(elFairing_jettison_velocity.value);
 		var Fairing_mass = parseFloat(elFairing_mass.value);
 		var Lift_off_Mass = parseFloat(elLift_off_Mass.value);
 		var Thrust_to_weight_ratio = parseFloat(elThrust_to_weight_ratio.value);
-		var First_stage_isp_vac = parseFloat(elFirst_stage_isp_vac.value);
-		var First_stage_isp_sea_level_or_at_the_start_altitude = parseFloat(elFirst_stage_isp_sea_level_or_at_the_start_altitude.value);
+		var First_stage_isp_vac = parseFloat(elFirst_stage_isp_vac.value) * Specific_Impulse_Variation / 100.0;
+		var First_stage_isp_sea_level_or_at_the_start_altitude = parseFloat(elFirst_stage_isp_sea_level_or_at_the_start_altitude.value) * Specific_Impulse_Variation / 100.0;
 		var v2nd_Stage_mass_Ratio = parseFloat(el2nd_Stage_mass_Ratio.value);
 		var v3rd_Stage_mass_Ratio = parseFloat(el3rd_Stage_mass_Ratio.value);
 		var v1st_Dry_to_Wet_mass_Ratio = parseFloat(el1st_Dry_to_Wet_mass_Ratio.value);
 		var v2nd_Dry_to_Wet_mass_Ratio = parseFloat(el2nd_Dry_to_Wet_mass_Ratio.value);
 		var Unused_propellant_of_1st_Stage = parseFloat(elUnused_propellant_of_1st_Stage.value);
 		var Unused_propellant_of_2nd_Stage = parseFloat(elUnused_propellant_of_2nd_Stage.value);
-		var Second_stage_isp_vac = parseFloat(elSecond_stage_isp_vac.value);
-		var Transfer_Orbit_Stage_isp = parseFloat(elTransfer_Orbit_Stage_isp.value);
+		var Second_stage_isp_vac = parseFloat(elSecond_stage_isp_vac.value) * Specific_Impulse_Variation / 100.0;
+		var Transfer_Orbit_Stage_isp = parseFloat(elTransfer_Orbit_Stage_isp.value) * Specific_Impulse_Variation / 100.0;
 		var Transfer_Orbit_Stage_mass_Ratio = parseFloat(elTransfer_Orbit_Stage_mass_Ratio.value);
 		var Unused_propellant_of_Transfer_Orbit_Stage = parseFloat(elUnused_propellant_of_Transfer_Orbit_Stage.value);
 		var Jettisoned_battery_mass = parseFloat(elJettisoned_battery_mass.value);
 		
 		var Payload_to_Lift_off_mass_Ratio = Assumed_payload_mass / Lift_off_Mass;
 		elPayload_to_Lift_off_mass_Ratio.textContent = (Payload_to_Lift_off_mass_Ratio * 100.0).toFixed(2);
-
-		elStages.textContent = (v3rd_Stage_mass_Ratio == 0)	? "2" : "3";
-		
+	
 		var Gravity_losses_at_specific_altitude = 9.81*(500.0/Math.sqrt((1.015*Math.sqrt((((Thrust_to_weight_ratio-1.0)*9.81)*
 				((Math.exp(112.13/((First_stage_isp_vac-(First_stage_isp_vac-First_stage_isp_sea_level_or_at_the_start_altitude)*0.169)+
 				(((First_stage_isp_vac-(First_stage_isp_vac-First_stage_isp_sea_level_or_at_the_start_altitude)*0.169)-First_stage_isp_sea_level_or_at_the_start_altitude)*1)/((1-0.169)*1.8872)*(-0.8612))))*
@@ -629,6 +635,18 @@
 
 	function Calculate()
 	{
+		if (parseFloat(el3rd_Stage_mass_Ratio.value) == 0)
+		{
+			elStages.textContent = "2";
+			for (var i = 0; i < els3Stage.length; i++)
+				els3Stage[i].setAttribute("hidden", "true");
+		} else
+		{
+			elStages.textContent = "3";
+			for (var i = 0; i < els3Stage.length; i++)
+				els3Stage[i].removeAttribute("hidden");
+		}
+
 		var Assumed_payload_mass = parseFloat(elAssumed_payload_mass.value);
 		for (itt = 1; itt <= 5; ++itt)
 		{
@@ -1007,7 +1025,7 @@
 		elFirst_stage_isp_vac.addEventListener('change', updateFirst_stage_isp_vac);
 		elSecond_stage_isp_vac.addEventListener('change', updateSecond_stage_isp_vac);
 		elTransfer_Orbit_Stage_isp.addEventListener('change', updateTransfer_Orbit_Stage_isp);
-					
+
 		elStarting_Point_Altitude.addEventListener('change', Calculate);
 		elAdditional_Speed.addEventListener('change', Calculate);
 		elOrbit_Perigee.addEventListener('change', Calculate);
@@ -1034,6 +1052,7 @@
 		elSecond_stage_isp_vac.addEventListener('change', Calculate);
 		elTransfer_Orbit_Stage_isp.addEventListener('change', Calculate);
 		elExtra_speed_for_flight_to_the_planets.addEventListener('change', Calculate);
+		elSpecific_Impulse_Variation.addEventListener('change', Calculate);
 		
 		elExpand.checked = false;
 		elExpand.addEventListener('change', ExpandChange);
