@@ -141,7 +141,7 @@
 	</table>
 </td>
 
-<td valign="top">
+<td valign="top" width=680 max-width=680>
 
 	<table border="0">
 	<tr>
@@ -421,7 +421,7 @@
 			Orbit_Inclination = parseFloat(elOrbit_Inclination.value);
 		
 		var Extra_speed_for_flight_to_the_planets = parseFloat(elExtra_speed_for_flight_to_the_planets.value);
-		var Intermediate_angle = Orbit_Inclination > Spaceport_latitude ?
+		var Intermediate_angle = Orbit_Inclination > Math.abs(Spaceport_latitude) ?
 				(Rad2Deg(Math.asin(Math.cos(Deg2Rad(Orbit_Inclination))/Math.cos(Deg2Rad(Spaceport_latitude))))) :
 				(90.0-Rad2Deg(Math.asin(1.0-(Math.cos(Deg2Rad(Orbit_Inclination))/Math.cos(Deg2Rad(Spaceport_latitude))))));
 		elIntermediate_angle.textContent = Intermediate_angle.toFixed(2);
