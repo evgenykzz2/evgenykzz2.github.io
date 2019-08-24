@@ -72,7 +72,7 @@
 	
 	<table border="1">
 	<tr><td width=460>Fuel</td></td><td width=220> <select id="Fuel"></select> </td></tr>
-	<tr><td>Stages</td><td> <label id="Stages"></label></td></tr>
+	<tr><td>Stages</td><td> <select id="StagesSelect"></select> </td></tr>
 	<tr><td>Thrust-to-weight ratio</td><td> <input id="Thrust_to_weight_ratio"></td></tr>
 	<tr><td>Lift-off Mass</td><td> <input id="Lift_off_Mass">Kg</td></tr>
 	<tr><td>Fairing mass</td><td> <input id="Fairing_mass">Kg</td></tr>
@@ -85,7 +85,7 @@
 	<tr><td>Payload to Lift-off mass Ratio</td><td> <label id="Payload_to_Lift_off_mass_Ratio"></label>%</td></tr>
 	
 	<tr><td>2nd Stage to Lift-off mass Ratio</td><td> <input id="_2nd_Stage_mass_Ratio">%</td></tr>
-	<tr><td>Transfer Orbit Stage to Lift-off mass Ratio</td><td> <input id="_3rd_Stage_mass_Ratio">%</td></tr>
+	<tr class="3Stage"><td>Transfer Orbit Stage to Lift-off mass Ratio</td><td> <input id="_3rd_Stage_mass_Ratio">%</td></tr>
 	
 	
 	<tr><td>1st Dry to Wet mass Ratio</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="_1st_Dry_to_Wet_mass_Ratio_Range">
@@ -94,7 +94,7 @@
 	<tr><td>2nd Dry to Wet mass Ratio</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="_2nd_Dry_to_Wet_mass_Ratio_Range">
 											   <input id="_2nd_Dry_to_Wet_mass_Ratio">%</td></tr>
 
-	<tr><td>Transfer Orbit Stage Dry to Wet mass Ratio</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Transfer_Orbit_Stage_mass_Ratio_Range">
+	<tr class="3Stage"><td>Transfer Orbit Stage Dry to Wet mass Ratio</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Transfer_Orbit_Stage_mass_Ratio_Range">
 											   <input id="Transfer_Orbit_Stage_mass_Ratio">%</td></tr>
 
 	<tr><td>Unused propellant of 1st Stage</td><td> <input type="range" min="1" max="100" value="50" class="slider" id="Unused_propellant_of_1st_Stage_Range">
@@ -173,13 +173,13 @@
 	<select id="Orbit">
 	</select>
 	<table border="1">
-	<tr><td width=460>Orbital period</td><td width=220> <label id="Orbital_period"    ></label>min</td></tr>
-	<tr><td>Orbit Perigee</td><td> <input id="Orbit_Perigee"                    value=200>Km</td></tr>
-	<tr><td>Orbit Apogee</td><td> <input id="Orbit_Apogee"                      value=0>Km</td></tr>
-	<tr><td>Orbit Inclination</td><td> <input id="Orbit_Inclination"            value=28.5>deg</td></tr>
-	<tr><td>Specific velocity for target orbit</td><td> <label id="Specific_velocity_for_target_orbit"    ></label>m/s</td></tr>
-	<tr><td>Extra speed for flight to the planets</td><td> <input id="Extra_speed_for_flight_to_the_planets"            value=0.0>m/s</td></tr>
-	</table>	
+	<tr><td width=460>Orbit Perigee</td><td width=220> <input id="Orbit_Perigee" value=200>Km</td></tr>
+	<tr><td>Orbit Apogee</td><td> <input id="Orbit_Apogee" value=0>Km</td></tr>
+	<tr><td>Orbit Inclination</td><td> <input id="Orbit_Inclination" value=28.5>deg</td></tr>
+	<tr><td>Orbital period</td><td> <label id="Orbital_period"></label>min</td></tr>
+	<tr><td>Specific velocity for target orbit</td><td> <label id="Specific_velocity_for_target_orbit"></label>m/s</td></tr>
+	<tr><td>Extra speed for flight to the planets</td><td> <input id="Extra_speed_for_flight_to_the_planets" value=0.0>m/s</td></tr>
+	</table>
 	</td>
 	</tr>
 
@@ -217,7 +217,7 @@
 	<tr class="Expanding"><td>Second stage propellant mass</td><td> <label id="Second_stage_propellant_mass"    ></label>Kg</td></tr>
 	<tr class="Expanding"><td>Second stage dry mass</td><td> <label id="Second_stage_dry_mass"    ></label>Kg</td></tr>
 	
-	<tr><td>Transfer Orbit stage specific velocity (required)</td><td> <label id="Transfer_Orbit_stage_specific_velocity_required"    ></label>m/s</td></tr>
+	<tr class="3Stage"><td>Transfer Orbit stage specific velocity (required)</td><td> <label id="Transfer_Orbit_stage_specific_velocity_required"    ></label>m/s</td></tr>
 	<tr class="Expanding"><td>Transfer Orbit stage total (Start) mass</td><td> <label id="Transfer_Orbit_stage_total_Start_mass"    ></label>Kg</td></tr>
 	<tr class="Expanding"><td>Transfer Orbit stage final mass</td><td> <label id="Transfer_Orbit_stage_final_mass"    ></label>Kg</td></tr>
 	<tr class="Expanding"><td>Transfer Orbit stage propellant mass</td><td> <label id="Transfer_Orbit_stage_propellant_mass"    ></label>Kg</td></tr>
@@ -260,7 +260,7 @@
 	var elRocketDescription = document.querySelector('#RocketDescription');
 	var elThrust_to_weight_ratio = document.querySelector('#Thrust_to_weight_ratio');
 	
-	var elStages = document.querySelector('#Stages');
+	var elStagesSelect = document.querySelector('#StagesSelect');
 	var elLift_off_Mass = document.querySelector('#Lift_off_Mass');
 	var elFairing_mass = document.querySelector('#Fairing_mass');
 	var elFairing_jettison_velocity = document.querySelector('#Fairing_jettison_velocity');
@@ -637,12 +637,10 @@
 	{
 		if (parseFloat(el3rd_Stage_mass_Ratio.value) == 0)
 		{
-			elStages.textContent = "2";
 			for (var i = 0; i < els3Stage.length; i++)
 				els3Stage[i].setAttribute("hidden", "true");
 		} else
 		{
-			elStages.textContent = "3";
 			for (var i = 0; i < els3Stage.length; i++)
 				els3Stage[i].removeAttribute("hidden");
 		}
@@ -888,7 +886,12 @@
 		elFirst_stage_isp_vac.value = s_rocket_data[elRocket.selectedIndex][16];
 		elSecond_stage_isp_vac.value = s_rocket_data[elRocket.selectedIndex][17];
 		elTransfer_Orbit_Stage_isp.value = s_rocket_data[elRocket.selectedIndex][18];
-		
+
+		if (s_rocket_data[elRocket.selectedIndex][8] == 0)
+			elStagesSelect.selectedIndex = 0;
+		else
+			elStagesSelect.selectedIndex = 1;
+			
 		var spacePort = s_rocket_data[elRocket.selectedIndex][20];
 		for (var i=0; i < s_start_point_count; ++i)
 		{
@@ -966,6 +969,29 @@
 		Calculate();
 	}
 	
+	function StagesUpdate()
+	{
+		if (elStagesSelect.selectedIndex == 0)
+			el3rd_Stage_mass_Ratio.value = 0;
+		else
+		{
+			if (s_rocket_data[elRocket.selectedIndex][8] == 0)
+				el3rd_Stage_mass_Ratio.value = 4;
+			else
+				el3rd_Stage_mass_Ratio.value = s_rocket_data[elRocket.selectedIndex][8];
+		}
+		Calculate();
+	}
+	
+	function StagesCheck()
+	{
+		if (el3rd_Stage_mass_Ratio.value == 0)
+			elStagesSelect.selectedIndex = 0;
+		else
+			elStagesSelect.selectedIndex = 1;
+		Calculate();
+	}
+	
 	function onPageLoad()
 	{
 		for (var i = 0; i<s_start_point_count; i++)
@@ -1004,6 +1030,15 @@
 		}
 		elFuel.addEventListener('change', updateFuel);
 
+		for (var i = 2; i < 4; i++)
+		{
+			var opt = document.createElement('option');
+			opt.value = i;
+			opt.innerHTML = i;
+			elStagesSelect.appendChild(opt);
+		}
+		elStagesSelect.addEventListener('change', StagesUpdate);
+		
 		el1st_Dry_to_Wet_mass_Ratio_Range.addEventListener('change', update1st_Dry_to_Wet_mass_Ratio_Range);
 		el2nd_Dry_to_Wet_mass_Ratio_Range.addEventListener('change', update2nd_Dry_to_Wet_mass_Ratio_Range);
 		elTransfer_Orbit_Stage_mass_Ratio_Range.addEventListener('change', updateTransfer_Orbit_Stage_mass_Ratio_Range);
@@ -1040,7 +1075,7 @@
 		elJettisoned_battery_mass.addEventListener('change', Calculate);
 		elAssumed_payload_mass.addEventListener('change', Calculate);
 		el2nd_Stage_mass_Ratio.addEventListener('change', Calculate);
-		el3rd_Stage_mass_Ratio.addEventListener('change', Calculate);
+		el3rd_Stage_mass_Ratio.addEventListener('change', StagesCheck);
 		
 		el2nd_Dry_to_Wet_mass_Ratio.addEventListener('change', Calculate);
 		elTransfer_Orbit_Stage_mass_Ratio.addEventListener('change', Calculate);
