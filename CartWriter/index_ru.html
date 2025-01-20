@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CartWriter</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+			background-color: #0000AA;
+			background-image: url(https://img00.deviantart.net/2a5a/i/2010/004/b/c/nintendo_nes_wallpaper_by_solidalexei.jpg);
+			background-position: top;
+			background-repeat: repeat;
+			background-attachment: fixed;
+			font-family: "Verdana", sans-serif;
+			font-size: 1.2em;
+			text-align: center;
+        }
+        html, body {
+            min-height: 100%;
+            height: 100%;
+        }
+        .content {
+            margin: 0 10px;
+			background-color: #ffffff;
+			display: inline-block;
+			text-align: left;
+			max-width:1200px;
+        }
+        .info {
+            background-color: gainsboro;
+            padding: 15px;
+			position: fixed;
+			bottom: 0;
+			right: 0;
+        }
+        ul {
+            margin: 0;
+        }
+		.preview {
+			background-color: black;
+			color: #fff;
+			text-align: center;
+			padding: 5px 5px;
+			border-radius: 6px;
+ 			position: fixed;
+		}
+    
+    .img_fit {
+      max-width: 1000px;
+        }
+	}
+    </style>
+</head>
+<body>
+<div class="content">
+<p align=center style="font-size:3vw;">CartWriter</p>
+<p align=center><img class="img_fit" width="99%" src="img/cartwriter_00.jpg" alt=""></p>
+
+<div style="margin: 10px; text-align: justify; text-indent: 1.5em; ">
+<p>CartWriter позволяет записывать одноигровки, многоигровки на 3 платформы: Famicom(Денди), Sega Genesis, SNES.</p>
+<p><b>Записывать можно только картриджи моего производства!</b></p>
+<p>Подключение к компьютеру осуществляется при помощи кабеля microusb, желательно использовать максимально короткий кабель, так как при использовании длинного кабеля проседает напряжение, что может привести к сбоям.</p>
+<p><b>Кнопка</b> - позволяет сделать сброс, после некоторых ошибок необходимо ее нажать, или переткнуть кабель microusb.</p>
+<p><b>Зеленый светодиод</b> - сигнализирует об активность передачи данных по USB. Если в процессе работы мигает - значит все в порядке.</p>
+<p><b>Синий светодиод</b> - визуализирует бит данных при общении с картриджем.</p>
+<p><b>Красный светодиод</b> - визуализирует состояние контакта "запись", не путать с режимом записи.</p>
+<p><b>Разъем ISP</b> - используется для перепрошивки CartWriter устройства.</p>
+
+<p>Картриджи необходимо устанавливать картинкой вперед (направленной на светодиоды), или же сторона платки с подписью "Front Side" должна смотреть на светодиоды.</p>
+<p><b>Famicom/Денди:</b></p>
+<p align=center><img class="img_fit" width="90%" src="img/cartwriter_01.jpg" alt=""></p>
+<p><b>Sega Genesis/MegaDrive:</b></p>
+<p align=center><img class="img_fit" width="90%" src="img/cartwriter_02.jpg" alt=""></p>
+<p><b>SNES:</b></p>
+<p align=center><img class="img_fit" width="90%" src="img/cartwriter_03.jpg" alt=""></p>
+
+<p><b>Последняя версия софта:</b> <a href="https://drive.google.com/u/0/uc?id=1sU4CMpTwItva_VuoMicfwjnZ0fSbIb6P&export=download">CartWriter-1.1</a></p>
+<p>Основное окно программы:</p>
+<p align=center><img class="img_fit" width="90%" src="img/app_00.jpg" alt=""></p>
+
+<p>Если вы подключили устройство перед запуском программы, тогда устройство должно автоматически определится (нижняя часть окна <b>Device:</b>), иначе нужно нажать на кнопку <b>Refresh</b> внизу окна.</p>
+<p>В верхней части окна можно быбрать одну из шести вкладок - тип картриджа:</p>
+<p><b>MegaDriveMulticart</b> - многоигровка SegaGenesis/MegaDrive</p>
+<p><b>MegaDriveOne</b> - одноигровка SegaGenesis/MegaDrive</p>
+<p><b>CoolX</b> - многоигровка Famicom/Денди</p>
+<p><b>CoolX-One</b> - одноигровка Famicom/Денди</p>
+<p><b>Snes Collection</b> - многоигровка SNES (не готово)</p>
+<p><b>Snes One</b> - одноигровка SNES</p>
+
+<p><b>Одноигровка Famicom/Денди</b></p>
+<p>На одноигровке расположены 4 чипа памяти, 2 флеша по 512КБ и 2 оперативной памяти, чтобы покрыть практически все типы маперов. Для записи необходимо переключить программу на вкладку<b>CoolX-One</b>, а затем перетянуть один или несколько ромов игры.</p>
+<p align=center><img class="img_fit" width="90%" src="img/app_01.jpg" alt=""></p>
+<p>Маппер, а так же конфигурация памяти должна совпадать. Если игра использует 128КБ програмной памяти и 128КБ видеопамяти, значит можно будет записать 4 игры (512/128 = 4), переключать которые можно будет при помощи кнопки Reset на консоле.</p>
+<p align=center><img class="img_fit" width="90%" src="img/app_02.jpg" alt=""></p>
+<p>Если задний фон стал зеленым - значит невозможно добавить больше игр. Удалить игру из списка можно нажав кнопку Delete напротив игры.</p>
+<p align=center><img class="img_fit" width="90%" src="img/app_03.jpg" alt=""></p>
+<p>Если игра не поддерживается, или неправильная конфигурация мапперов тогда задний план будет подсвечен красным.</p>
+
+<p>Цена устройства <b>500грн</b>.</p>
+<p>Связатся со мной можно по Viber, Telegram, Телефон <b>+380992028599</b> <b>Кузнецов Евгений</b></p>
+<p>Отправка: новая почта/укрпочта. Оплата: наложка/приват</p>
+</div>
+</div>
+</body>
+</html>
