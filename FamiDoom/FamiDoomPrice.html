@@ -55,8 +55,8 @@
 </head>
 <body>
 <div class="content">
-<p align=center style="font-size:3vw;">FamiDoom</p>
-<p align=center><img class="img_fit" width="99%" src="FamiDoom.jpg" alt=""></p>
+<p align=center style="font-size:250%;">FamiDoom</p>
+<p align=center><img class="img_fit" width="90%" src="FamiDoom.jpg" alt=""></p>
 
 <div style="margin: 10px; text-align: justify; text-indent: 1.5em; ">
 <p>Нарешті це трапилось. Справжній, оригінальний Doom 1993 року на Денді.</p>
@@ -64,11 +64,11 @@
 <p>Цей проєкт був разроблений мною з нуля, збірка базується на https://github.com/chocolate-doom/chocolate-doom.</p>
 
 <p></p>
-<p align=center style="font-size:3vw;">Не перший прототип:</p>
-<p align=center><img class="img_fit" width="99%" src="prototype.jpg" alt=""></p>
+<p align=center style="font-size:250%;">Не перший прототип:</p>
+<p align=center><img class="img_fit" width="90%" src="prototype.jpg" alt=""></p>
 
 <p></p>
-<p align=center style="font-size:3vw;">Як воно працює?</p>
+<p align=center style="font-size:250%;">Як воно працює?</p>
 <p>Якщо бути кратким - у картриджі стоїть мікропроцессор ESP32S3, який заміняє собою відео памьять та CIRAM. Та дінамічно генерує відео кадр - CHR та Nametable.</p>
 <p>У PGM памьяті розташовується программа, яка синхронізує ESP32S3, зчитує керування та передає на мікроконтроллер.</p>
 <p>Данні гри зберігаються у вбудуваній памьяті ESP32S3.</p>
@@ -78,40 +78,40 @@
 <p>Кількість кольорів - 10</p>
 <p>Audio              - mono 24Khz</p>
 <p>Також залишається обмеження - 4 коліра на блок 8х1.</p>
-<p align=center><img class="img_fit" width="99%" src="Pcb-Full.jpg" alt=""></p>
+<p align=center><img class="img_fit" width="90%" src="Pcb-Full.jpg" alt=""></p>
 
 <p></p>
-<p align=center style="font-size:3vw;">Нічого не вирізано?</p>
+<p align=center style="font-size:250%;">Нічого не вирізано?</p>
 <p>Орігінальний Doom працює виключно у режимі 320х200. Тому прийшлось переробити ігрову панель.</p>
 <p>Деякі надписи не влізали на екран, та шріфт після конвертації до 10 кольорів виглядав зовсім погано.</p>
 <p>Задля економії памьяті було залучено ZIP стискання, що дозволило зжати ресурси до 4МБ.</p>
-<p align=center><img class="img_fit" width="99%" src="DoomResources.jpg" alt=""></p>
+<p align=center><img class="img_fit" width="90%" src="DoomResources.jpg" alt=""></p>
 
 <p></p>
-<p align=center style="font-size:3vw;">Налаштування зображення є?</p>
+<p align=center style="font-size:250%;">Налаштування зображення є?</p>
 <p>Я додав спеціальний пункт меню в опціях - Colors.</p>
-<p align=center><img class="img_fit" width="99%" src="colors.jpg" alt=""></p>
+<p align=center><img class="img_fit" width="90%" src="colors.jpg" alt=""></p>
 <p>Saturation - насиченість. Сірий стає білим, темно сірий - чорним.</p>
-<p align=center><img class="img_fit" width="99%" src="saturation.jpg" alt=""></p>
+<p align=center><img class="img_fit" width="90%" src="saturation.jpg" alt=""></p>
 <p>Brightness - яскравість. Усі кольри світлішають. Домомогає бачити у темряві.</p>
-<p align=center><img class="img_fit" width="99%" src="brightness.jpg" alt=""></p>
+<p align=center><img class="img_fit" width="90%" src="brightness.jpg" alt=""></p>
 <p>Noise type - тип шуму. Шум дозволяє імітувати напівтони. 4 варінти - без шуму, два варіанти BlueNoise, та BayerNoise.</p>
-<p align=center><img class="img_fit" width="99%" src="noise.jpg" alt=""></p>
+<p align=center><img class="img_fit" width="90%" src="noise.jpg" alt=""></p>
 <p>Noise power- потужність шуму.</p>
 
 <p></p>
-<p align=center style="font-size:3vw;">А як там музика та звуки?</p>
+<p align=center style="font-size:250%;">А як там музика та звуки?</p>
 <p>На цьому питанні проєкт дуже на довго призупинився.</p>
 <p>По перше - музика у MID форматі, по друге - необхідність використання зовнішній DAC чіпу.</p>
 <p>OPL потребує дуже багато ресурсів, оригінальний код виконувався 100-200мс для генераціі 20мс аудіо. Прийшлося вирізати стерео, оптимізувати код, та зменьшити частоту дискретизації до 24Кгц.</p>
 <p>Після всього вдалося повністю відтворити оригінальну музику та звуки на ESP32S3. Синтезатор звуку Famicom не задіян.</p>
 <p>Також на платі є потенціометр для налаштування гучності. На деяких консолях може бути затихо та шумно, а на деяких загучно та звук буде різатися.</p>
-<p align=center><img class="img_fit" width="99%" src="Pcb-Audio.jpg" alt=""></p>
+<p align=center><img class="img_fit" width="90%" src="Pcb-Audio.jpg" alt=""></p>
 
 <p></p>
-<p align=center style="font-size:3vw;">Яке керування?</p>
+<p align=center style="font-size:250%;">Яке керування?</p>
 <p>Щоб відкрити вбудовану підказву - оберіть у меню "Read This".</p>
-<p align=center><img class="img_fit" width="99%" src="help.jpg" alt=""></p>
+<p align=center><img class="img_fit" width="90%" src="help.jpg" alt=""></p>
 <p>Хрестовина - ходити та крутитися.</p>
 <p>Select - відкрити та біг (зажати Select).</p>
 <p>Start - меню.</p>
@@ -122,25 +122,25 @@
 <p>Select+Start - відкрити мапу.</p>
 
 <p></p>
-<p align=center style="font-size:3vw;">На яких консолях працює?</p>
+<p align=center style="font-size:250%;">На яких консолях працює?</p>
 <p>Я тестував на багатьох Денді клонах, на Famicom, AvFamicom, Nes, NesPal. На усіх працює.</p>
 <p>На перщому екрані по запуску відіброжається тип консолі. Це може бути Famicom, Dendy, NesPal.</p>
 <p>Мікроконтрелер ESP32S3 використовує цю інформацію, бо на різних "регіонах" різний таймінг.</p>
 <p>На Dendy, Pal більше часу на VBlank, тому старт гри, збереження, завантаження працює швидше.</p>
-<p align=center><img class="img_fit" width="99%" src="launch.jpg" alt=""></p>
+<p align=center><img class="img_fit" width="90%" src="launch.jpg" alt=""></p>
 
 <p></p>
-<p align=center style="font-size:3vw;">Так це можна зберігатись?</p>
+<p align=center style="font-size:250%;">Так це можна зберігатись?</p>
 <p>Так, збереження працюють як на оригіналі. Для прискорення збереження екран гасне на секунду.</p>
 <p>Збереження записуються на внутрюшню флеш памьять, так-що можна продовжити грати у будь який час.</p>
-<p align=center><img class="img_fit" width="99%" src="save.jpg" alt=""></p>
+<p align=center><img class="img_fit" width="90%" src="save.jpg" alt=""></p>
 
 <p></p>
-<p align=center style="font-size:3vw;">Яка версія Doom?</p>
+<p align=center style="font-size:250%;">Яка версія Doom?</p>
 <p>Перша, із трьома епізодами. Думаю із часом інші частини адаптую.</p>
 
 <p></p>
-<p align=center style="font-size:3vw;">Так, вже хочу</p>
+<p align=center style="font-size:250%;">Так, вже хочу</p>
 <p>Зв'язатися зі мною можна по Viber, Telegram, Телефон <b>+380992028599</b> <b>Кузнєцов Євген</b></p>
 <p>Відправлення: Нова Пошта/Укрпошта.</p>
 <p>Вартість - 1000грн</p>
