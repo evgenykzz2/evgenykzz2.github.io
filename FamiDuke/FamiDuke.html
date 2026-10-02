@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FamiDuke</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+			background-color: #0000AA;
+			background-image: url(full-size.jpg);
+			background-position: top;
+			background-repeat: repeat;
+			background-attachment: fixed;
+			font-family: "Verdana", sans-serif;
+			font-size: 1.2em;
+			text-align: center;
+        }
+        html, body {
+            min-height: 100%;
+            height: 100%;
+        }
+        .content {
+            margin: 0 10px;
+			background-color: #ffffff;
+			display: inline-block;
+			text-align: left;
+			max-width:1200px;
+        }
+        .info {
+            background-color: gainsboro;
+            padding: 15px;
+			position: fixed;
+			bottom: 0;
+			right: 0;
+        }
+        ul {
+            margin: 0;
+        }
+		.preview {
+			background-color: black;
+			color: #fff;
+			text-align: center;
+			padding: 5px 5px;
+			border-radius: 6px;
+ 			position: fixed;
+		}
+    
+    .img_fit {
+      max-width: 1000px;
+	}
+    </style>
+</head>
+<body>
+<div class="content">
+<p align=center style="font-size:250%;">FamiDuke</p>
+<p align=center><img class="img_fit" width="90%" src="FamiDuke.jpg" alt=""></p>
+
+<div style="margin: 10px; text-align: justify; text-indent: 1.5em; ">
+<p>Ще одна шедевральна гра 90х повністю перенесена на 8бітний формат.</p>
+<p>Щоб вас побалувати "новинкою" прийшлось провести дуже багато роботи. Прийшлось перемалювати багато екранів, шрифтів, додати стискання зображення, пережати оригінальні звукові доріжки. Але не хвилюйтесь жодної "чікі" не вирізанно. Все так само - бій чужинців, рятуй чік.</p>
+<p>Багато було перенесено із мого порта Думу, але вдалося досягти більшої позначки FPS.</p>
+<p>Версія гри - Duke Nukem 3D Atomic Edition, повна на 4 епізоди.</p>
+<p>Велика подяка <b>Захаревич Олександру</b> у тестуванні та підтримці.</p>
+
+
+<p></p>
+<p align=center style="font-size:250%;">Як воно працює?</p>
+<p>Так само як і Дум порт, у картриджі стоїть мікропроцесор ESP32S3, який замінює собою відео пам'ять та CIRAM. Та динамічно генерує відео кадр - CHR та Nametable.</p>
+<p>У PGM пам'яті розташовується програма, яка синхронізує ESP32S3, зчитує керування та передає на мікроконтролер. Крім того додана можливість змінювати палітру.</p>
+<p>Дані гри зберігаються у вбудованій пам'яті ESP32S3.</p>
+<p>Треба мати на увазі, що відключення музики додасть приблизно 10FPS, також опції "Noise" та "Blink" впливають на FPS.</p>
+<p>Технічні характеристики:</p>
+<p>Розмір екрану      - 256х224</p>
+<p>FPS                - 30-60</p>
+<p>Кількість кольорів - 10</p>
+<p>Audio              - mono 24Khz</p>
+<p align=center><img class="img_fit" width="90%" src="pcb.jpg" alt=""></p>
+
+<p></p>
+<p align=center style="font-size:250%;">Налаштування зображення</p>
+<p>Я додав спеціальні пункти меню у відео сетінгах.</p>
+<p align=center><img class="img_fit" width="90%" src="VideoSettings.png" alt=""></p>
+<p>Brightness - яскравість.</p>
+<p align=center><img class="img_fit" width="90%" src="Settings-Brightness.gif" alt=""></p>
+<p>Saturation - насиченість.</p>
+<p align=center><img class="img_fit" width="90%" src="Settings-Saturation.gif" alt=""></p>
+<p>Noise type - тип шуму. Шум дозволяє імітувати напівтони. 4 варінти - без шуму, BlueNoise, Vertical та BayerNoise.</p>
+<p align=center><img class="img_fit" width="90%" src="Settings-Noise-Type.gif" alt=""></p>
+<p>Noise power- потужність шуму.</p>
+<p align=center><img class="img_fit" width="90%" src="Settings-Noise-Power.gif" alt=""></p>
+<p>Edges - відображення граней.</p>
+<p align=center><img class="img_fit" width="90%" src="Settings-Edges.gif" alt=""></p>
+<p>Blink - режим "мигання" коли із 2х зображень мозок бачить усереднене зображення.</p>
+<p align=center><img class="img_fit" width="90%" src="Settings-Blink.gif" alt=""></p>
+
+<p></p>
+<p align=center style="font-size:250%;">Музика та звуки</p>
+<p>Музика в грі - MIDI, звуки не зжаті .wav низької дискретизації.</p>
+<p>Вдалося до біса сильно оптимізувати OPL3, але частота дискретизації занижена вдвічі і складає 24Кгц.</p>
+<p>Звук преобразується на зовнішньому чіпу PCM5102A, також на платі є потенціометр для налаштування гучності. По замовченю він налаштований на максимум, і поки ніхто не скаржився, тому нема сенсу його вертіти.</p>
+<p align=center><img class="img_fit" width="90%" src="pcb-audio.jpg" alt=""></p>
+
+<p></p>
+<p align=center style="font-size:250%;">Як керувати</p>
+<p>Щоб відкрити вбудовану підказку - виберіть у меню "HELP".</p>
+<p align=center><img class="img_fit" width="90%" src="Help.png" alt=""></p>
+<p><b>Хрестовина</b> - ходити та крутитися.</p>
+<p><b>Select</b> - відкрити.</p>
+<p><b>Start</b> - меню.</p>
+<p><b>В</b> - постріл.</p>
+<p><b>А</b> - режим приставного шагу, якщо зажати - то по натисканню "Ліворуч" та "Праворуч" гравець не буде кружитись, а рухатись.</p>
+<p><b>Select+A</b> - наступне озброення.</p>
+<p><b>Select+B</b> - попередне озброення.</p>
+<p><b>Двічі вперед/Двічі назад</b> - біг.</p>
+<p><b>Двічі селект</b> - присісти.</p>
+<p><b>Двічі А</b> - стрибок.</p>
+<p></p>
+<p>У додатковому меню Controls можна обрати чутливість, та обрати заміну кнопок якщо пальці ростуть не з того місця.</p>
+<p align=center><img class="img_fit" width="90%" src="Settings-Controls.png" alt=""></p>
+<p></p>
+<p>А тепер до ексклюзивного меню - інвентаря. Якщо нажати старт в процесі гри - то відкриється спеціальне меню.</p>
+<p align=center><img class="img_fit" width="90%" src="special-menu.png" alt=""></p>
+
+<p>1 - вибір зброї. Після закриття меню зброя зменеться.</p>
+<p align=center><img class="img_fit" width="90%" src="select-weapon.gif" alt=""></p>
+
+<p>2 - вибір предмету. На кнопку B можна використати предмет.</p>
+<p align=center><img class="img_fit" width="90%" src="select-item.gif" alt=""></p>
+
+<p>3 - мапа.</p>
+<p align=center><img class="img_fit" width="90%" src="select-mapa.gif" alt=""></p>
+
+<p>4 - масштаб мапи.</p>
+
+<p>5 - режим прицілювання. Після закриття меню (натиснути Старт) кнопкою вверх/вниз можна буде піднімати/опускати приціл. Щоб вийти із режиму прицілювання достатньо один раз нажати Старт, при цьому меню не відкриється.</p>
+
+<p align=center><img class="img_fit" width="90%" src="select-aim.gif" alt=""></p>
+
+<p></p>
+<p align=center style="font-size:250%;">Підтримка консолей</p>
+<p>Я тестував на багатьох Денді клонах, на Famicom, AvFamicom, Nes, NesPal. На усіх працює.</p>
+<p>На деяких Lifa немає звуку, так само якщо грати через перехідник на NES - не буде звуку.</p>
+<p>На деяких телевізорах верхні 8 строк зображення не відображаються. Для цього я додав опцію в меню - "Message offset", якщо вімкнути усі сповіщення будуть зсунуті вниз на 8 пікселів.</p>
+<p align=center><img class="img_fit" width="90%" src="Settings-game.png" alt=""></p>
+
+
+<p></p>
+<p align=center style="font-size:250%;">Збереження</p>
+<p>Так, збереження працюють як на оригіналі. Для прискорення збереження екран гасне на секунду.</p>
+<p>Збереження записуються на внутрішню флеш пам'ять, так-що можна продовжити грати у будь який час.</p>
+<p>Ввести назву збереження не можливо. Формат імені: Епізод-Рівень (Сумарний час гри).</p>
+<p align=center><img class="img_fit" width="90%" src="save-game.png" alt=""></p>
+
+<p></p>
+<p align=center style="font-size:250%;">Варіанти корпусів</p>
+<p>Можете обрати один із 4 корпусів</p>
+<p>1 - Чорний Конамі:</p>
+<p align=center><img class="img_fit" width="90%" src="FamiDuke.jpg" alt=""></p>
+<p>2 - Чорний Фаміком:</p>
+<p align=center><img class="img_fit" width="90%" src="case-famicom.jpg" alt=""></p>
+<p>3 - Жовтий стіплер:</p>
+<p align=center><img class="img_fit" width="90%" src="case-stipler.jpg" alt=""></p>
+<p>4 - Жовтий ТвГейм:</p>
+<p align=center><img class="img_fit" width="90%" src="case-tvgame.jpg" alt=""></p>
+
+<p></p>
+<p align=center style="font-size:250%;">DNSTUFF?</p>
+<p>Так</p>
+<p style="color: #FFFFFF;font-size:25%;">↑↑↓↓←→←→AB: додає усю зброю та ключи;</p>
+<p style="color: #FFFFFF;font-size:25%;">↑↑↓↓←→←→BA: режим бога;</p>
+<p style="color: #FFFFFF;font-size:25%;">↑↑↓↓→←→←BA: завершує рівень.</p>
+
+<p></p>
+<p align=center style="font-size:250%;">Як придбати</p>
+<p>Зв'язатися зі мною можна по Viber, Telegram, Телефон <b>+380992028599</b> <b>Кузнєцов Євген</b></p>
+<p>Відправлення: Нова Пошта/Укрпошта.</p>
+
+
+</div>
+</div>
+</body>
+</html>
